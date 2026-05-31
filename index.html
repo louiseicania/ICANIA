@@ -99,6 +99,33 @@ a { color: var(--ink); text-decoration: none; }
 ::selection { background: var(--accent-30); color: var(--ink); }
 ::-moz-selection { background: var(--accent-30); color: var(--ink); }
 
+/* ---------- 8-bit wand cursor (desktop only) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  html, body, a, button, .btn, .btn-vinted, .btn-text, [role="button"], summary, label {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='32'%20height='32'%20viewBox='0%200%2032%2032'%20shape-rendering='crispEdges'%3E%3Cg%20fill='%23111'%3E%3Crect%20x='18'%20y='10'%20width='2'%20height='2'/%3E%3Crect%20x='20'%20y='10'%20width='2'%20height='2'/%3E%3Crect%20x='16'%20y='12'%20width='2'%20height='2'/%3E%3Crect%20x='18'%20y='12'%20width='2'%20height='2'/%3E%3Crect%20x='14'%20y='14'%20width='2'%20height='2'/%3E%3Crect%20x='16'%20y='14'%20width='2'%20height='2'/%3E%3Crect%20x='12'%20y='16'%20width='2'%20height='2'/%3E%3Crect%20x='14'%20y='16'%20width='2'%20height='2'/%3E%3Crect%20x='10'%20y='18'%20width='2'%20height='2'/%3E%3Crect%20x='12'%20y='18'%20width='2'%20height='2'/%3E%3Crect%20x='8'%20y='20'%20width='2'%20height='2'/%3E%3Crect%20x='10'%20y='20'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='22'%20width='2'%20height='2'/%3E%3Crect%20x='8'%20y='22'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='24'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='24'%20width='2'%20height='2'/%3E%3C/g%3E%3Cg%20fill='%23ff4f9a'%3E%3Crect%20x='20'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='20'%20y='2'%20width='2'%20height='2'/%3E%3Crect%20x='16'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='18'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='22'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='24'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='20'%20y='6'%20width='2'%20height='2'/%3E%3Crect%20x='20'%20y='8'%20width='2'%20height='2'/%3E%3C/g%3E%3Crect%20x='20'%20y='4'%20width='2'%20height='2'%20fill='%23fff'/%3E%3C/svg%3E") 20 5, auto;
+  }
+  input, textarea, select { cursor: text; }
+  select { cursor: default; }
+}
+
+/* ---------- Click sparkle (desktop only) ---------- */
+.wand-sparkle {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 99999;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2012%2012'%20shape-rendering='crispEdges'%3E%3Cg%20fill='%23ff4f9a'%3E%3Crect%20x='5'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='5'%20y='10'%20width='2'%20height='2'/%3E%3Crect%20x='0'%20y='5'%20width='2'%20height='2'/%3E%3Crect%20x='10'%20y='5'%20width='2'%20height='2'/%3E%3Crect%20x='5'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='5'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='5'%20width='2'%20height='2'/%3E%3Crect%20x='5'%20y='6'%20width='2'%20height='2'/%3E%3C/g%3E%3Crect%20x='5'%20y='5'%20width='2'%20height='2'%20fill='%23fff'/%3E%3C/svg%3E");
+  animation: wandSparkle 0.55s steps(6, end) forwards;
+}
+@keyframes wandSparkle {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.4) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4) rotate(90deg); }
+}
+
 .display-xxl {
   font-family: var(--font-display);
   font-size: clamp(72px, 14vw, 220px);
@@ -364,9 +391,10 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   box-shadow: 0 12px 32px -16px rgba(142, 123, 163, 0.55);
 }
 .btn.btn-arrow:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+  background: #6E4FA3;
+  border-color: #6E4FA3;
+  color: #fff;
+  box-shadow: 0 14px 34px -14px rgba(110, 79, 163, 0.7);
 }
 .btn-arrow::after {
   content: " →";
@@ -675,7 +703,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
 }
 .hero-headline-row h1 {
   margin: 0;
-  font-size: clamp(64px, 11vw, 184px);
+  font-size: clamp(56px, 9.5vw, 160px);
 }
 .hero-side {
   display: flex;
@@ -803,7 +831,7 @@ main:focus { outline: none; }
   50%      { letter-spacing: 0.18em; opacity: 1; }
 }
 .hero-description {
-  padding: 64px var(--gutter) 0;
+  padding: 32px var(--gutter) 0;
   max-width: var(--max);
   margin: 0 auto;
 }
@@ -838,30 +866,30 @@ main:focus { outline: none; }
 .btn-vinted {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px 46px;
+  gap: 8px;
+  padding: 15px 32px;
   font-family: var(--font);
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 400;
   color: #fff;
   background: #007782;
   border: 1px solid #007782;
-  border-radius: 6px;
-  box-shadow: 0 16px 40px -18px rgba(0, 119, 130, 0.6);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px -16px rgba(0, 119, 130, 0.55);
   transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 .btn-vinted:hover {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: #009AA8;
+  border-color: #009AA8;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 20px 48px -18px rgba(31, 37, 64, 0.5);
+  box-shadow: 0 20px 48px -18px rgba(0, 154, 168, 0.65);
 }
 .btn-vinted::after {
   content: "\2197";
-  font-size: 15px;
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -1574,7 +1602,7 @@ main:focus { outline: none; }
   .hero-headline-row { gap: 24px; }
   .trust { display: grid; grid-template-columns: 1fr 1fr; row-gap: 36px; column-gap: 24px; align-items: start; }
   .trust-item { padding-top: 16px; border-top: 1px solid var(--accent-30); }
-  .btn.btn-arrow { font-size: 12px; padding: 18px 28px; }
+  .btn.btn-arrow, .btn-vinted { font-size: 12px; padding: 18px 28px; }
   .about-hero { padding: 56px var(--gutter); }
   .about-body { padding: 48px var(--gutter); }
   .sell-hero-left { padding: 48px var(--gutter); }
@@ -3202,6 +3230,29 @@ if (window.location.pathname.replace(/\/$/, '') === '/reviews') {
   window.history.replaceState({}, '', '/sell');
 })();
 
+</script>
+
+<script>
+/* Wand click sparkle — desktop pointers only */
+(function () {
+  if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.addEventListener('pointerdown', function (e) {
+    if (e.pointerType && e.pointerType !== 'mouse') return;
+    var count = 5;
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('div');
+      s.className = 'wand-sparkle';
+      var dx = (Math.random() - 0.5) * 34;
+      var dy = (Math.random() - 0.5) * 34;
+      s.style.left = (e.clientX + dx) + 'px';
+      s.style.top = (e.clientY + dy) + 'px';
+      s.style.animationDelay = (Math.random() * 90) + 'ms';
+      s.addEventListener('animationend', function () { this.remove(); });
+      document.body.appendChild(s);
+    }
+  }, { passive: true });
+})();
 </script>
 
 </body>
