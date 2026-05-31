@@ -99,24 +99,6 @@ a { color: var(--ink); text-decoration: none; }
 ::selection { background: var(--accent-30); color: var(--ink); }
 ::-moz-selection { background: var(--accent-30); color: var(--ink); }
 
-/* ---------- High-tech weighted lilac gloop cursor (desktop only) ---------- */
-@media (hover: hover) and (pointer: fine) {
-  html.has-gloop, html.has-gloop * { cursor: none; }
-}
-.cursor-gloop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 100000;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  filter: drop-shadow(0 0 7px rgba(171, 143, 230, 0.45));
-}
-.cursor-gloop circle { fill: #ab8fe6; }
-
 .display-xxl {
   font-family: var(--font-display);
   font-size: clamp(72px, 14vw, 220px);
@@ -3226,54 +3208,11 @@ if (window.location.pathname.replace(/\/$/, '') === '/reviews') {
 </script>
 
 <script>
-/* High-tech weighted lilac cursor + inertia scroll — desktop pointers only */
+/* Weighted (inertia) scroll — desktop pointers only */
 (function () {
   var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!fine || reduce) return;
-
-  /* ---- Weighted lilac gloop cursor (gooey metaballs) ---- */
-  document.documentElement.classList.add('has-gloop');
-  var NS = 'http://www.w3.org/2000/svg';
-  var svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('class', 'cursor-gloop');
-  svg.innerHTML =
-    '<defs><filter id="gloopGoo">' +
-      '<feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/>' +
-      '<feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"/>' +
-    '</filter></defs>' +
-    '<g filter="url(#gloopGoo)">' +
-      '<circle r="10"/><circle r="8"/><circle r="6.5"/><circle r="5"/>' +
-    '</g>';
-  document.body.appendChild(svg);
-  var blobs = svg.querySelectorAll('circle');
-
-  var tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-  /* each blob trails the one before it — laggier blobs = longer gloop tail */
-  var pts = [];
-  for (var i = 0; i < blobs.length; i++) pts.push({ x: tx, y: ty });
-  var ease = [0.22, 0.12, 0.075, 0.05];   /* lead weighted; tail lags hard for a long gloop stretch */
-  var shown = false;
-
-  window.addEventListener('pointermove', function (e) {
-    if (e.pointerType && e.pointerType !== 'mouse') return;
-    tx = e.clientX; ty = e.clientY;
-    if (!shown) { shown = true; svg.style.opacity = '1'; }
-  }, { passive: true });
-  document.addEventListener('mouseleave', function () { svg.style.opacity = '0'; });
-  document.addEventListener('mouseenter', function () { if (shown) svg.style.opacity = '1'; });
-
-  (function cursorTick() {
-    var prevX = tx, prevY = ty;
-    for (var i = 0; i < pts.length; i++) {
-      pts[i].x += (prevX - pts[i].x) * ease[i];
-      pts[i].y += (prevY - pts[i].y) * ease[i];
-      blobs[i].setAttribute('cx', pts[i].x);
-      blobs[i].setAttribute('cy', pts[i].y);
-      prevX = pts[i].x; prevY = pts[i].y;
-    }
-    requestAnimationFrame(cursorTick);
-  })();
 
   /* ---- Weighted (inertia) scroll ---- */
   var target = window.scrollY, current = window.scrollY, running = false;
