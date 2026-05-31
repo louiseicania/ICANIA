@@ -107,19 +107,15 @@ a { color: var(--ink); text-decoration: none; }
   position: fixed;
   top: 0;
   left: 0;
-  width: 30px;
-  height: 30px;
-  margin: -15px 0 0 -15px;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 100000;
   opacity: 0;
   transition: opacity 0.25s ease;
-  will-change: transform;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #e4d8f7 0%, #c2a9ec 38%, #9d83cc 72%, #7d63ab 100%);
-  box-shadow: 0 0 10px 2px rgba(157, 131, 204, 0.55), 0 0 24px 7px rgba(180, 154, 224, 0.35);
-  filter: blur(0.3px);
+  filter: drop-shadow(0 0 7px rgba(171, 143, 230, 0.45));
 }
+.cursor-gloop circle { fill: #ab8fe6; }
 
 .display-xxl {
   font-family: var(--font-display);
@@ -3236,40 +3232,46 @@ if (window.location.pathname.replace(/\/$/, '') === '/reviews') {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!fine || reduce) return;
 
-  /* ---- Weighted lilac gloop cursor ---- */
+  /* ---- Weighted lilac gloop cursor (gooey metaballs) ---- */
   document.documentElement.classList.add('has-gloop');
-  var cur = document.createElement('div');
-  cur.className = 'cursor-gloop';
-  document.body.appendChild(cur);
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'cursor-gloop');
+  svg.innerHTML =
+    '<defs><filter id="gloopGoo">' +
+      '<feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/>' +
+      '<feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"/>' +
+    '</filter></defs>' +
+    '<g filter="url(#gloopGoo)">' +
+      '<circle r="10"/><circle r="8"/><circle r="6.5"/><circle r="5"/>' +
+    '</g>';
+  document.body.appendChild(svg);
+  var blobs = svg.querySelectorAll('circle');
 
   var tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-  var cx = tx, cy = ty, px = cx, py = cy;
-  var stretch = 0;   /* eased deform amount, 0 = round sphere */
+  /* each blob trails the one before it — laggier blobs = longer gloop tail */
+  var pts = [];
+  for (var i = 0; i < blobs.length; i++) pts.push({ x: tx, y: ty });
+  var ease = [0.22, 0.12, 0.075, 0.05];   /* lead weighted; tail lags hard for a long gloop stretch */
   var shown = false;
 
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType && e.pointerType !== 'mouse') return;
     tx = e.clientX; ty = e.clientY;
-    if (!shown) { shown = true; cur.style.opacity = '1'; }
+    if (!shown) { shown = true; svg.style.opacity = '1'; }
   }, { passive: true });
-  document.addEventListener('mouseleave', function () { cur.style.opacity = '0'; });
-  document.addEventListener('mouseenter', function () { if (shown) cur.style.opacity = '1'; });
+  document.addEventListener('mouseleave', function () { svg.style.opacity = '0'; });
+  document.addEventListener('mouseenter', function () { if (shown) svg.style.opacity = '1'; });
 
   (function cursorTick() {
-    /* weighted follow — the gloop lags behind the pointer */
-    cx += (tx - cx) * 0.14;
-    cy += (ty - cy) * 0.14;
-
-    /* velocity drives the gooey squash/stretch */
-    var vx = cx - px, vy = cy - py; px = cx; py = cy;
-    var speed = Math.sqrt(vx * vx + vy * vy);
-    var targetStretch = Math.min(speed * 0.045, 0.55);
-    stretch += (targetStretch - stretch) * 0.2;       /* ease the wobble back */
-    var angle = Math.atan2(vy, vx) * 180 / Math.PI;
-    var sx = 1 + stretch, sy = 1 - stretch * 0.65;
-
-    cur.style.transform =
-      'translate(' + cx + 'px,' + cy + 'px) rotate(' + angle + 'deg) scale(' + sx + ',' + sy + ')';
+    var prevX = tx, prevY = ty;
+    for (var i = 0; i < pts.length; i++) {
+      pts[i].x += (prevX - pts[i].x) * ease[i];
+      pts[i].y += (prevY - pts[i].y) * ease[i];
+      blobs[i].setAttribute('cx', pts[i].x);
+      blobs[i].setAttribute('cy', pts[i].y);
+      prevX = pts[i].x; prevY = pts[i].y;
+    }
     requestAnimationFrame(cursorTick);
   })();
 
