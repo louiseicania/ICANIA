@@ -1101,29 +1101,22 @@ main:focus { outline: none; }
   border-bottom: var(--hair-strong);
 }
 .step-cell {
-  padding: 44px 36px;
+  padding: 26px 36px 30px;
   border-right: var(--hair);
-  min-height: 280px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
 }
 .step-cell:last-child { border-right: 0; }
-.step-num {
-  font-family: var(--font);
-  font-size: 12px;
-  letter-spacing: 0.24em;
-  font-feature-settings: "tnum";
-  color: var(--accent);
-}
 .step-title {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1.15;
   letter-spacing: -0.005em;
-  margin-top: 12px;
+  margin-top: 0;
   font-weight: 400;
 }
+.step-hash { color: var(--accent); }
 .step-body {
   font-family: var(--font);
   font-size: 14px;
@@ -1761,8 +1754,9 @@ main:focus { outline: none; }
   :root { --gutter: 24px; }
   .section-mark { display: none; }
   .three-step { grid-template-columns: 1fr; }
-  .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 12px; padding: 24px var(--gutter); }
+  .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 8px; padding: 18px var(--gutter); }
   .step-cell:last-child { border-bottom: 0; }
+  .home-hiw-more { text-align: right; padding-top: 12px; padding-bottom: 28px; }
   .product-grid { grid-template-columns: 1fr; }
   .review-grid, .seller-list { grid-template-columns: 1fr; }
   .footer { margin-top: 24px; padding-top: 48px; }
@@ -2035,7 +2029,7 @@ if ('serviceWorker' in navigator) {
 
     <section id="home-how-it-works">
       <div class="container home-hiw-head">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; flex-wrap: wrap; gap: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; gap: 24px;">
           <div>
             <h2 class="display-l">How it works.</h2>
           </div>
@@ -2043,32 +2037,20 @@ if ('serviceWorker' in navigator) {
       </div>
       <div class="three-step">
         <div class="step-cell">
-          <span class="step-num mono-num">01</span>
-          <div>
-            <h3 class="step-title">Get in touch.</h3>
-            <p class="step-body">Tell us what you have. We&rsquo;ll call to confirm the brands and arrange collection or drop off.</p>
-          </div>
+          <h3 class="step-title"><span class="step-hash">#1</span> Get in touch.</h3>
+          <p class="step-body">Tell us what you have. We&rsquo;ll call to confirm the brands and arrange collection or drop off.</p>
         </div>
         <div class="step-cell">
-          <span class="step-num mono-num">02</span>
-          <div>
-            <h3 class="step-title">We collect.</h3>
-            <p class="step-body">Drop your pieces off in South West London or we collect for a small fee deducted from your final payment.</p>
-          </div>
+          <h3 class="step-title"><span class="step-hash">#2</span> We collect.</h3>
+          <p class="step-body">Drop your pieces off in South West London or we collect for a small fee deducted from your final payment.</p>
         </div>
         <div class="step-cell">
-          <span class="step-num mono-num">03</span>
-          <div>
-            <h3 class="step-title">We sell.</h3>
-            <p class="step-body">Steaming, photographing, listing, replying to buyers, packing, posting. You don&rsquo;t lift a finger.</p>
-          </div>
+          <h3 class="step-title"><span class="step-hash">#3</span> We sell.</h3>
+          <p class="step-body">Steaming, photographing, listing, replying to buyers, packing, posting. You don&rsquo;t lift a finger.</p>
         </div>
         <div class="step-cell">
-          <span class="step-num mono-num">04</span>
-          <div>
-            <h3 class="step-title">Money split.</h3>
-            <p class="step-body">Whatever sells, we split fifty fifty. Anything still on the rail at month four goes back to you or to charity.</p>
-          </div>
+          <h3 class="step-title"><span class="step-hash">#4</span> Money split.</h3>
+          <p class="step-body">Whatever sells, we split fifty fifty. Anything still on the rail at month four goes back to you or to charity.</p>
         </div>
       </div>
       <div class="container home-hiw-more">
@@ -3325,13 +3307,35 @@ function __observeReveals(scope) {
 
 /* ---------- In-page smooth scroll for [data-scroll] anchors ---------- */
 (function () {
+  var DURATION = 1200;   // leisurely, so the descent reads clearly
+  var NAV_OFFSET = 88;   // clear the sticky header
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function glideTo(targetY) {
+    var startY = window.pageYOffset;
+    var diff = targetY - startY;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || Math.abs(diff) < 4) {
+      window.scrollTo(0, targetY);
+      return;
+    }
+    var start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var t = Math.min(1, (ts - start) / DURATION);
+      window.scrollTo(0, Math.round(startY + diff * easeInOutCubic(t)));
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
   document.addEventListener('click', function (e) {
-    const link = e.target.closest('a[data-scroll][href^="#"]');
+    var link = e.target.closest('a[data-scroll][href^="#"]');
     if (!link) return;
-    const target = document.querySelector(link.getAttribute('href'));
+    var target = document.querySelector(link.getAttribute('href'));
     if (!target) return;
     e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var targetY = window.pageYOffset + target.getBoundingClientRect().top - NAV_OFFSET;
+    glideTo(Math.max(0, targetY));
   });
 })();
 
