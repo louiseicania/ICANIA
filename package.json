@@ -1,0 +1,8 @@
+{
+  "name": "icania",
+  "private": true,
+  "description": "Icania — South West London womenswear consignment site (static, GitHub Pages).",
+  "scripts": {
+    "build": "node build.js"
+  }
+}
