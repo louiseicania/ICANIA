@@ -5,7 +5,7 @@
 //   - Cache-first for static assets (icons, fairy GIF, fonts)
 // Cache name is versioned. Bump CACHE_VERSION when you change pre-cached assets.
 
-const CACHE_VERSION = 'v10';
+const CACHE_VERSION = 'v11';
 const CACHE = 'icania-' + CACHE_VERSION;
 
 const PRECACHE = [
@@ -13,10 +13,10 @@ const PRECACHE = [
   '/index.html',
   '/404.html',
   '/fairy_stopmotion.gif',
-  '/favicon.png',
-  '/favicon-32.png',
-  '/favicon-192.png',
-  '/apple-touch-icon.png'
+  '/favicon-v2.png',
+  '/favicon-32-v2.png',
+  '/favicon-192-v2.png',
+  '/apple-touch-icon-v2.png'
 ];
 
 self.addEventListener('install', (event) => {
