@@ -710,7 +710,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 150px; height: auto; margin: 0 28px; display: block; opacity: 0.85; will-change: transform; }
+.section-mark img { width: 220px; height: auto; margin: 0 36px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -1007,7 +1007,7 @@ main:focus { outline: none; }
 
 .trust {
   border-bottom: var(--hair-strong);
-  padding: 56px 0;
+  padding: 36px 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1028,7 +1028,7 @@ main:focus { outline: none; }
 .trust-location {
   margin: 0;
   align-self: flex-end;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 9px;
   font-family: var(--font-display);
@@ -1068,7 +1068,7 @@ main:focus { outline: none; }
   justify-content: center;
   padding: 48px var(--gutter) 0;
 }
-.home-hiw-head { padding-top: 96px; padding-bottom: 0; }
+.home-hiw-head { padding-top: 64px; padding-bottom: 0; }
 #home-how-it-works { scroll-margin-top: 88px; }
 .home-hiw-more { padding-top: 28px; padding-bottom: 40px; }
 .home-mission { border-top: var(--hair-strong); padding-top: 56px; padding-bottom: 56px; }
@@ -1790,6 +1790,7 @@ main:focus { outline: none; }
   .trust-item-label { grid-column: 2; max-width: none; font-size: 13px; text-align: left; white-space: nowrap; }
   .trust-location-mark { display: inline-flex; }
   .trust-location {
+    display: inline-flex;
     margin-top: 20px;
     padding-top: 18px;
     border-top: 1px solid var(--accent-30);
@@ -1825,8 +1826,9 @@ main:focus { outline: none; }
   .numbered-row { padding: 40px var(--gutter); gap: 12px; }
   [data-view="reviews"] .page-header { padding: 24px var(--gutter) 16px; }
   [data-view="reviews"] .page-header .display-l { font-size: clamp(30px, 8.6vw, 44px); white-space: nowrap; line-height: 1.05; }
-  .reviews-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .reviews-header { flex-direction: column; align-items: flex-start; text-align: left; gap: 10px; }
   .reviews-header .body-l { font-size: 15px; line-height: 1.5; }
+  .reviews-header .reviews-all-link { margin-top: 10px; font-family: var(--font); font-style: normal; font-size: 13px; letter-spacing: 0.01em; }
   .reviews-all-link { margin-top: 12px; }
   .review-tabs { flex-wrap: wrap; gap: 24px; margin-top: 20px; padding-top: 18px; padding-bottom: 18px; }
   .nav-mark { font-size: 24px; }
@@ -2163,6 +2165,11 @@ if ('serviceWorker' in navigator) {
             <div class="form-field">
               <label class="form-label" for="count">Estimated number of pieces<span class="req">Min. 10</span></label>
               <input class="form-input" id="count" name="count" type="number" min="10" required placeholder="e.g. 15">
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="bags">Estimated number of dustbin bags you can fill</label>
+              <input class="form-input" id="bags" name="bags" type="number" min="1" placeholder="e.g. 3">
             </div>
             </div>
             </div>
