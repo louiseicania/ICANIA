@@ -121,7 +121,7 @@ a { color: var(--ink); text-decoration: none; }
   line-height: 1.04;
   letter-spacing: -0.008em;
 }
-.shop-title { font-size: clamp(26px, 6.4vw, 92px); white-space: nowrap; line-height: 1.05; }
+.shop-title { font-size: clamp(26px, 5.2vw, 64px); line-height: 1.08; }
 .display-m {
   font-family: var(--font-display);
   font-size: clamp(32px, 5vw, 64px);
@@ -915,6 +915,13 @@ main:focus { outline: none; }
 .cta-band-inner > p,
 .cta-band-inner > h2 { max-width: 640px; }
 .cta-band.with-rule { border-top: 1px solid var(--ink-25); }
+.cta-band-inner.cta-stack {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
 
 /* ---------- Vinted button + shop coming-soon ---------- */
 .btn-vinted {
@@ -2029,7 +2036,7 @@ if ('serviceWorker' in navigator) {
     </section>
 
     <section class="cta-band with-rule">
-      <div class="cta-band-inner">
+      <div class="cta-band-inner cta-stack">
         <h2 class="display-m">Ready when you are!</h2>
         <a class="btn btn-arrow" href="/sell">Start selling</a>
       </div>
@@ -2583,7 +2590,7 @@ if ('serviceWorker' in navigator) {
   <div class="footer-grid">
     <div>
       <div class="footer-mark"><span class="spark" aria-hidden="true"><img src="fairy-mark.png" alt=""></span>Icania</div>
-      <p class="footer-tag">South West London womenswear consignment.<br>We do the work. You keep half.</p>
+      <p class="footer-tag">South West London womenswear consignment.<br>We do the work.<br>You keep half.</p>
     </div>
     <div>
       <h4>Browse</h4>
