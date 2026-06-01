@@ -1241,8 +1241,9 @@ main:focus { outline: none; }
   border-bottom: var(--hair-strong);
   padding: 28px var(--gutter);
   max-width: var(--max);
-  margin: 64px auto 0;
+  margin: 24px auto 0;
 }
+[data-view="reviews"] .page-header { padding-top: 64px; padding-bottom: 24px; }
 .review-tab {
   background: none;
   border: 0;
@@ -1431,44 +1432,43 @@ main:focus { outline: none; }
 }
 
 .accept-box {
-  border: var(--hair-strong);
-  max-width: 420px;
+  max-width: 460px;
 }
 .accept-summary {
   list-style: none;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 16px 20px;
+  gap: 7px;
+  padding: 4px 0;
 }
 .accept-summary::-webkit-details-marker { display: none; }
-@media (hover: hover) {
-  .accept-summary:hover { background-color: rgba(142, 123, 163, 0.06); }
-}
 .accept-title {
   font-family: var(--font);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 12px;
-  color: var(--ink-70);
+  font-size: 13px;
+  color: var(--accent);
+  white-space: nowrap;
 }
-.accept-title s { color: var(--ink-45); text-decoration-thickness: 1px; }
+.accept-title s { opacity: 0.55; text-decoration-thickness: 1px; }
 .accept-icon {
   flex: 0 0 auto;
   display: inline-flex;
   color: var(--accent);
   transition: transform 0.3s ease;
 }
+.accept-icon svg { width: 11px; height: 11px; }
 .accept-box[open] .accept-icon { transform: rotate(180deg); }
-.accept-body { padding: 0 20px 16px; }
+@media (hover: hover) {
+  .accept-summary:hover .accept-title { opacity: 0.8; }
+}
+.accept-body { padding: 8px 0 0; }
 .accept-body p {
   margin: 0;
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--ink-80);
+  color: var(--ink-65);
+  max-width: 420px;
 }
 
 .sell-hero {
@@ -1643,8 +1643,8 @@ main:focus { outline: none; }
   .home-hero-steps { max-width: none; }
   .hero-cta { width: 100%; }
   .sell-hero { grid-template-columns: 1fr; }
-  .sell-hero-left { border-right: 0; border-bottom: var(--hair-strong); padding: 64px var(--gutter); }
-  .sell-hero-right { padding: 64px var(--gutter); }
+  .sell-hero-left { border-right: 0; border-bottom: var(--hair-strong); padding: 40px var(--gutter) 28px; gap: 22px; }
+  .sell-hero-right { padding: 28px var(--gutter) 40px; }
   .sell-aftermath-grid { grid-template-columns: 1fr; gap: 40px; }
   .sell-aftermath { padding: 64px var(--gutter); }
   .about-hero { padding: 88px var(--gutter); }
@@ -1738,8 +1738,8 @@ main:focus { outline: none; }
   .btn.btn-arrow, .btn-vinted { font-size: 12px; padding: 18px 28px; }
   .about-hero { padding: 56px var(--gutter); }
   .about-body { padding: 48px var(--gutter); }
-  .sell-hero-left { padding: 48px var(--gutter); }
-  .sell-hero-right { padding: 48px var(--gutter); }
+  .sell-hero-left { padding: 32px var(--gutter) 24px; gap: 18px; }
+  .sell-hero-right { padding: 24px var(--gutter) 36px; }
   .sell-aftermath { padding: 48px var(--gutter); }
   .sell-sent { padding: 64px 16px !important; }
   .page-header { padding: 56px var(--gutter) 32px; }
@@ -1839,10 +1839,10 @@ window.__loader = (function () {
   L.begin({ immediate: true });
   var gates = 1;
   function clear() { if (--gates <= 0) L.end(); }
-  // Hold for one full fairy cycle so the animation always plays in full, no
-  // matter how fast the page loads. The loader GIF runs 15 frames x 50ms = 750ms;
-  // a small buffer covers decode/start jitter (esp. on mobile). On slower loads
-  // the page gates below keep it up longer and the GIF simply loops.
+  // Hold briefly so most of the fairy animation plays on arrival, without
+  // delaying page access. The loader GIF runs 15 frames x 65ms; we cap the hold
+  // at 820ms so it never slows the page. Slower loads keep it up longer (gates
+  // below) and the GIF simply loops.
   gates++;
   setTimeout(clear, 820);
   if (document.fonts && document.fonts.ready) {
