@@ -1616,37 +1616,73 @@ main:focus { outline: none; }
   </div>
 </div>
 <script>
-(function () {
-  var loader = document.getElementById('page-loader');
-  if (!loader) return;
-  var shown = false, shownAt = 0;
-  function ready() {
-    return document.readyState === 'interactive' || document.readyState === 'complete';
+/* Reusable loader: quick flash on first open, reappears while anything is loading */
+window.__loader = (function () {
+  var el = document.getElementById('page-loader');
+  if (!el) return { begin: function () {}, end: function () {} };
+
+  var busy = 0;            // number of in-flight loading tasks
+  var visible = false;
+  var shownAt = 0;
+  var pendingShow = null;
+  var DELAY = 120;         // a task must outlast this before it flashes the loader
+  var MIN_VISIBLE = 550;   // once shown, hold at least this long so it reads as a flash
+
+  function show() {
+    if (pendingShow) { clearTimeout(pendingShow); pendingShow = null; }
+    if (visible) return;
+    el.classList.remove('hide');
+    el.classList.add('show');
+    visible = true;
+    shownAt = Date.now();
   }
-  var showTimer = setTimeout(function () {
-    if (!ready()) {
-      loader.classList.add('show');
-      shown = true;
-      shownAt = Date.now();
-    }
-  }, 200);
-  function done() {
-    clearTimeout(showTimer);
-    if (!shown) {
-      if (loader.parentNode) loader.parentNode.removeChild(loader);
-      return;
-    }
-    var minVisible = 600;
-    var wait = Math.max(0, minVisible - (Date.now() - shownAt));
+  function hide() {
+    if (!visible) return;
+    visible = false;
+    el.classList.add('hide');
     setTimeout(function () {
-      loader.classList.add('hide');
-      setTimeout(function () {
-        if (loader.parentNode) loader.parentNode.removeChild(loader);
-      }, 400);
-    }, wait);
+      if (!visible) el.classList.remove('show', 'hide');
+    }, 420);
   }
-  if (ready()) done();
-  else document.addEventListener('DOMContentLoaded', done);
+  function settle() {
+    if (busy > 0 || !visible) return;
+    var wait = Math.max(0, MIN_VISIBLE - (Date.now() - shownAt));
+    setTimeout(function () { if (busy === 0) hide(); }, wait);
+  }
+  function begin(opts) {
+    busy++;
+    if (visible) return;
+    if (opts && opts.immediate) { show(); return; }
+    if (!pendingShow) {
+      pendingShow = setTimeout(function () {
+        pendingShow = null;
+        if (busy > 0) show();
+      }, DELAY);
+    }
+  }
+  function end() {
+    busy = Math.max(0, busy - 1);
+    if (busy === 0) {
+      if (pendingShow) { clearTimeout(pendingShow); pendingShow = null; }
+      settle();
+    }
+  }
+  return { begin: begin, end: end };
+})();
+
+/* First open: flash immediately, hold until the DOM and web fonts are ready */
+(function () {
+  var L = window.__loader;
+  if (!L || !L.begin) return;
+  L.begin({ immediate: true });
+  var gates = 1;
+  function clear() { if (--gates <= 0) L.end(); }
+  if (document.fonts && document.fonts.ready) {
+    gates++;
+    document.fonts.ready.then(clear, clear);
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') clear();
+  else document.addEventListener('DOMContentLoaded', clear);
 })();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
@@ -3065,6 +3101,20 @@ function __observeReveals(scope) {
              '<div class="product-size">Size ' + p.size + '</div>' +
              '</a>';
     }).join('');
+    // Flash the loader while real (remote) product images load
+    var L = window.__loader;
+    if (L && L.begin) {
+      visible.forEach(function (p) {
+        if (!p.image) return; // placeholders are inline data URIs — instant
+        var im = new Image();
+        L.begin();
+        var fin = function () { L.end(); };
+        im.onload = fin;
+        im.onerror = fin;
+        im.src = p.image;
+        if (im.complete) fin();
+      });
+    }
   }
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
