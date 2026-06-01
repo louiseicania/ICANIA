@@ -1840,27 +1840,39 @@ window.__loader = (function () {
   return { begin: begin, end: end };
 })();
 
-/* First open: flash immediately, hold until the DOM and web fonts are ready */
+/* First open: stay invisible on a normal load — the corner fairy is branding
+   enough. The full-screen fairy loader only appears if the page is genuinely
+   slow to come together (a poor connection), where it fills the wait and then
+   clears the moment the DOM and web fonts are ready. */
 (function () {
   var L = window.__loader;
   if (!L || !L.begin) return;
-  L.begin({ immediate: true });
-  var gates = 1;
-  function clear() { if (--gates <= 0) L.end(); }
-  // Hold for one full play of the fairy so the whole animation is seen, calmly.
-  // The loader GIF runs 15 frames x 110ms = 1650ms and plays ONCE (loop=1), then
-  // rests on its last frame. On fast loads this is the floor; slower loads keep
-  // it up longer via the gates below while the fairy sits still (no frantic
-  // re-looping). Fade-out is 360ms, timed to land as the play completes.
-  var PLAY_MS = 1650;
-  gates++;
-  setTimeout(clear, PLAY_MS);
-  if (document.fonts && document.fonts.ready) {
-    gates++;
-    document.fonts.ready.then(clear, clear);
+
+  var SLOW_AFTER = 800;   // only reveal the loader if still loading after this
+  var ready = false;
+  var shown = false;
+  var pending = 1;        // DOM parse (+ web fonts, added below)
+
+  var slowTimer = setTimeout(function () {
+    slowTimer = null;
+    if (ready) return;
+    shown = true;
+    L.begin({ immediate: true });
+  }, SLOW_AFTER);
+
+  function markReady() {
+    if (ready || --pending > 0) return;
+    ready = true;
+    if (slowTimer) { clearTimeout(slowTimer); slowTimer = null; }
+    if (shown) L.end();
   }
-  if (document.readyState === 'complete' || document.readyState === 'interactive') clear();
-  else document.addEventListener('DOMContentLoaded', clear);
+
+  if (document.fonts && document.fonts.ready) {
+    pending++;
+    document.fonts.ready.then(markReady, markReady);
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') markReady();
+  else document.addEventListener('DOMContentLoaded', markReady);
 })();
 
 /* iOS/mobile defers GIF playback until the first repaint (which is why it only
