@@ -646,11 +646,16 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
 
 /* ---------- Page-specific ---------- */
 
-.hero {
-  padding: 24px 0 88px;
-  border-bottom: var(--hair-strong);
+.home-hero {
+  min-height: calc(100vh - 86px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 40px;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 32px var(--gutter) 56px;
+  box-sizing: border-box;
 }
-[data-view="home"] .hero { border-bottom: 0; }
 .section-mark {
   display: flex;
   align-items: center;
@@ -668,45 +673,72 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   background: var(--accent-30);
 }
 .section-mark svg { margin: 0 18px; display: block; }
-.hero-line {
-  padding: 0 var(--gutter);
-  max-width: var(--max);
-  margin: 0 auto;
-  position: relative;
-}
-.hero-headline-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
-  align-items: center;
-}
-.hero-headline-row h1 {
+.home-hero-headline {
   margin: 0;
-  font-size: clamp(56px, 9.5vw, 160px);
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  max-width: 18ch;
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(56px, 8.4vw, 140px);
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+  color: var(--ink);
 }
-.hero-side {
+.home-hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 48px;
+}
+.home-hero-steps { max-width: 460px; }
+.hero-steps {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+.hero-steps li {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: var(--hair);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink-80);
+}
+.hero-steps li:last-child { border-bottom: var(--hair); }
+.hero-step-n {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--accent);
+}
+.home-hero-side {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-self: center;
+  align-items: flex-end;
+  gap: 22px;
+  text-align: right;
 }
-.hero-tagline {
+.home-hero-tagline {
+  margin: 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(22px, 2.4vw, 36px);
-  line-height: 1.25;
+  font-size: clamp(20px, 1.9vw, 30px);
+  line-height: 1.1;
   color: var(--accent);
-  margin: 0;
-  text-align: center;
-  letter-spacing: 0;
+  white-space: nowrap;
 }
 .hero-cta {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  align-items: flex-start;
-  padding-bottom: 12px;
+  gap: 16px;
+  align-items: stretch;
+  width: 300px;
+  max-width: 100%;
 }
 .hero-cta .btn-arrow,
 .hero-cta .btn-vinted {
@@ -815,19 +847,6 @@ main:focus { outline: none; }
   0%, 100% { letter-spacing: 0.05em; opacity: 0.7; }
   50%      { letter-spacing: 0.18em; opacity: 1; }
 }
-.hero-description {
-  padding: 32px var(--gutter) 0;
-  max-width: var(--max);
-  margin: 0 auto;
-}
-.hero-description p {
-  font-family: var(--font);
-  font-size: clamp(17px, 2.2vw, 22px);
-  line-height: 1.55;
-  max-width: 720px;
-  color: var(--ink-80);
-}
-
 /* Indented CTA band — used for "Sounds straightforward?" / "Want in?" / "Add yours" etc. */
 .cta-band {
   padding: 80px 0;
@@ -1521,10 +1540,13 @@ main:focus { outline: none; }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
   .review-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-headline-row { grid-template-columns: 1fr; gap: 40px; }
-  .hero-side { gap: 24px; align-items: flex-start; justify-self: start; }
-  .hero-cta { padding-bottom: 0; }
-  .hero-tagline { display: none; }
+  .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
+  .home-hero-headline { max-width: none; text-align: left; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); }
+  .home-hero-foot { flex-direction: column; align-items: stretch; gap: 44px; }
+  .home-hero-side { order: -1; align-items: flex-start; text-align: left; }
+  .home-hero-tagline { white-space: normal; }
+  .home-hero-steps { max-width: none; }
+  .hero-cta { width: 100%; }
   .sell-hero { grid-template-columns: 1fr; }
   .sell-hero-left { border-right: 0; border-bottom: var(--hair-strong); padding: 64px var(--gutter); }
   .sell-hero-right { padding: 64px var(--gutter); }
@@ -1587,9 +1609,9 @@ main:focus { outline: none; }
   .footer-base { flex-direction: column; gap: 8px; align-items: flex-start; }
   .section { padding: 56px 0; }
   .section-lg { padding: 88px 0; }
-  .hero { padding: 40px 0 64px; }
-  .hero-description { padding-top: 40px; }
-  .hero-headline-row { gap: 24px; }
+  .home-hero { padding: 32px var(--gutter) 48px; }
+  .home-hero-headline { margin-bottom: 32px; font-size: clamp(44px, 13vw, 76px); }
+  .home-hero-foot { gap: 36px; }
   .trust { display: grid; grid-template-columns: 1fr 1fr; row-gap: 36px; column-gap: 24px; align-items: start; }
   .trust-item { padding-top: 16px; border-top: 1px solid var(--accent-30); }
   .btn.btn-arrow, .btn-vinted { font-size: 12px; padding: 18px 28px; }
@@ -1692,6 +1714,21 @@ window.__loader = (function () {
   if (document.readyState === 'complete' || document.readyState === 'interactive') clear();
   else document.addEventListener('DOMContentLoaded', clear);
 })();
+
+/* iOS/mobile defers GIF playback until the first repaint (which is why it only
+   starts on scroll). Re-set the header mark's src once loaded to kick it off. */
+(function () {
+  function kick() {
+    var mark = document.querySelector('.nav-anim');
+    if (!mark) return;
+    var s = mark.getAttribute('src');
+    if (!s) return;
+    mark.removeAttribute('src');
+    setTimeout(function () { mark.src = s; }, 0);
+  }
+  if (document.readyState === 'complete') kick();
+  else window.addEventListener('load', kick);
+})();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js').catch(function () {});
@@ -1719,22 +1756,24 @@ if ('serviceWorker' in navigator) {
 
 <main id="main" tabindex="-1">
 <section data-view="home">
-<section class="hero">
-      <div class="hero-line">
-        <div class="hero-headline-row">
-          <h1 class="display-xxl fade-up fade-up-1">Sell your<br>wardrobe<br>without the hassle.</h1>
-          <div class="hero-side fade-up fade-up-2">
-            <p class="hero-tagline" aria-hidden="true">South West London<br>consignment.</p>
-            <div class="hero-cta">
-              <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
-              <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
-              <a class="btn-text" href="/shop">How the shop works</a>
-            </div>
+<section class="home-hero">
+      <h1 class="home-hero-headline fade-up fade-up-1">Sell your wardrobe without the hassle.</h1>
+      <div class="home-hero-foot">
+        <div class="home-hero-steps fade-up fade-up-2">
+          <ol class="hero-steps">
+            <li><span class="hero-step-n">1</span><span>I collect your clothes.</span></li>
+            <li><span class="hero-step-n">2</span><span>I publish your clothes on my Vinted account.</span></li>
+            <li><span class="hero-step-n">3</span><span>Your clothes sell, we split the money, I handle shipping.</span></li>
+          </ol>
+          <a class="btn-text" href="/how-it-works">Read more</a>
+        </div>
+        <div class="home-hero-side fade-up fade-up-3">
+          <p class="home-hero-tagline">South West London Clothing Consignment.</p>
+          <div class="hero-cta">
+            <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
+            <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
           </div>
         </div>
-      </div>
-      <div class="hero-description fade-up fade-up-3">
-        <p>Womenswear consignment for South West London. We collect, photograph, list, and sell your pieces on Vinted. You keep half of everything that sells, with no upfront cost and zero dealing with buyers.</p>
       </div>
     </section>
 
