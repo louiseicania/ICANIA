@@ -904,7 +904,7 @@ main:focus { outline: none; }
 .btn-vinted:hover::after { transform: translateX(4px); }
 
 .shop-coming {
-  padding: 8px 0 96px;
+  padding: 4px 0 36px;
 }
 .shop-coming-inner {
   max-width: 1280px;
@@ -924,10 +924,15 @@ main:focus { outline: none; }
   color: var(--ink-65);
 }
 .shop-coming-note {
-  font-size: 14px;
+  font-size: 12px;
+  white-space: nowrap;
   color: var(--ink-65);
   margin: 0;
 }
+.shop-cta-line { font-size: clamp(18px, 2vw, 24px); max-width: 520px; }
+[data-view="shop"] .page-header { padding-bottom: 36px; }
+[data-view="shop"] .cta-band { padding: 32px 0 64px; }
+[data-view="shop"] .cta-band-inner { gap: 20px; }
 
 /* Indented caption strip — used for "A small selection from over 700..." */
 .caption-band {
@@ -984,6 +989,12 @@ main:focus { outline: none; }
   text-transform: uppercase;
   color: var(--ink-65);
 }
+.trust-cta {
+  display: flex;
+  justify-content: center;
+  padding: 48px var(--gutter) 0;
+}
+.home-hiw-head { padding-top: 96px; padding-bottom: 32px; }
 
 .three-step {
   display: grid;
@@ -1616,8 +1627,11 @@ main:focus { outline: none; }
   .home-hero { padding: 32px var(--gutter) 48px; }
   .home-hero-headline { margin-bottom: 32px; font-size: clamp(44px, 13vw, 76px); }
   .home-hero-foot { gap: 36px; }
-  .trust { display: grid; grid-template-columns: 1fr 1fr; row-gap: 36px; column-gap: 24px; align-items: start; }
+  .trust { display: grid; grid-template-columns: 1fr 1fr; row-gap: 28px; column-gap: 24px; align-items: start; padding: 8px 0 0; border-bottom: 0; }
   .trust-item { padding-top: 16px; border-top: 1px solid var(--accent-30); }
+  .trust-cta { padding-top: 32px; }
+  .trust-cta .btn-arrow { width: 100%; text-align: center; }
+  .home-hiw-head { padding-top: 40px; }
   .btn.btn-arrow, .btn-vinted { font-size: 12px; padding: 18px 28px; }
   .about-hero { padding: 56px var(--gutter); }
   .about-body { padding: 48px var(--gutter); }
@@ -1629,6 +1643,13 @@ main:focus { outline: none; }
   .legal { padding: 64px var(--gutter); }
   .cta-band { padding: 48px 0; }
   .cta-band-inner { gap: 24px; }
+  [data-view="shop"] .page-header { padding: 20px var(--gutter) 10px; }
+  [data-view="shop"] .page-header .body-l { font-size: 15px; line-height: 1.5; }
+  .shop-coming { padding: 0 0 14px; }
+  .shop-coming-inner { gap: 16px; }
+  [data-view="shop"] .cta-band { padding: 12px 0 40px; }
+  [data-view="shop"] .cta-band-inner { gap: 14px; }
+  .shop-cta-line { font-size: 18px; }
   .numbered-row { padding: 40px var(--gutter); gap: 12px; }
   .reviews-header { flex-direction: column; align-items: flex-start; }
   .review-tabs { flex-wrap: wrap; gap: 24px; }
@@ -1804,10 +1825,13 @@ if ('serviceWorker' in navigator) {
           <span>London only</span>
         </div>
       </div>
+      <div class="trust-cta">
+        <a class="btn btn-arrow" href="/sell">Get in touch and start selling</a>
+      </div>
     </section>
 
     <section>
-      <div class="container" style="padding-top: 96px; padding-bottom: 32px;">
+      <div class="container home-hiw-head">
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 24px;">
           <div>
             <h2 class="display-l">How it works.</h2>
@@ -1871,13 +1895,13 @@ if ('serviceWorker' in navigator) {
       <div class="shop-coming-inner fade-up fade-up-3">
         <span class="shop-coming-eyebrow">Browse the rail</span>
         <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
-        <p class="shop-coming-note">Opens the Icania shop on Vinted &middot; 700+ five-star reviews</p>
+        <p class="shop-coming-note">Opens on Vinted &middot; 700+ five-star reviews</p>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-band-inner">
-        <p class="display-s" style="max-width: 580px;">Have pieces you&rsquo;d like to see on the rail? Send them our way.</p>
+        <p class="display-s shop-cta-line">Have pieces for the rail? Send them our way.</p>
         <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
       </div>
     </section>
