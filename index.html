@@ -776,22 +776,21 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   align-items: center;
   gap: 9px;
   padding: 13px 22px;
-  background: rgba(142, 123, 163, 0.18);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(142, 123, 163, 0.12);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
   color: var(--ink);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 999px;
   font-family: var(--font);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 12px 32px -10px rgba(31, 37, 64, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  box-shadow: 0 12px 32px -10px rgba(31, 37, 64, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(calc(var(--cta-lift, 0px) * -1));
-  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
+  transition: background 0.3s ease;
   z-index: 80;
   animation: cta-enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -1945,7 +1944,6 @@ if ('serviceWorker' in navigator) {
           <div>
             <h2 class="display-l">How it works.</h2>
           </div>
-          <a class="btn-text" href="/how-it-works">See full process</a>
         </div>
       </div>
       <div class="three-step">
@@ -3223,67 +3221,6 @@ function __observeReveals(scope) {
     }, 140);
   });
 
-  // Always present in the bottom-right. Rather than hide when something it would
-  // cover sits underneath, it magnetically lifts up just enough to clear the
-  // obstacle (buttons, footer links/buttons), then settles back down.
-  const GAP = 14;          // breathing room kept between the pill and an obstacle
-  const MAX_LIFT = 320;    // never float more than this far up
-
-  // The pill's resting rectangle (at lift 0), derived from its fixed offsets so
-  // we can measure overlaps without the current lift confusing the maths.
-  function restRect() {
-    const cs = getComputedStyle(cta);
-    const w = cta.offsetWidth;
-    const h = cta.offsetHeight;
-    const bottom = parseFloat(cs.bottom) || 20;
-    const right = parseFloat(cs.right) || 20;
-    const left = window.innerWidth - right - w;
-    const top = window.innerHeight - bottom - h;
-    return { left, right: left + w, top, bottom: top + h };
-  }
-
-  function visible(el) {
-    if (!el || !el.offsetParent && el !== document.body) return false;
-    const cs = getComputedStyle(el);
-    return cs.display !== 'none' && cs.visibility !== 'hidden';
-  }
-
-  function update() {
-    const pill = restRect();
-    const obstacles = document.querySelectorAll(
-      '.btn, .footer a, .footer button, .next-step a, .cta-band a'
-    );
-    let lift = 0;
-    obstacles.forEach((el) => {
-      if (el === cta || !visible(el)) return;
-      const r = el.getBoundingClientRect();
-      if (r.width === 0 || r.height === 0) return;
-      // Horizontal overlap with the pill's column?
-      if (r.right <= pill.left - GAP || r.left >= pill.right + GAP) return;
-      // Obstacle sits within the pill's vertical band (at rest)?
-      if (r.bottom <= pill.top - GAP || r.top >= pill.bottom + GAP) return;
-      // Lift just enough to clear above this obstacle's top edge.
-      const needed = pill.bottom - r.top + GAP;
-      if (needed > lift) lift = needed;
-    });
-    lift = Math.max(0, Math.min(MAX_LIFT, lift));
-    cta.style.setProperty('--cta-lift', lift + 'px');
-  }
-  window.__ctaUpdate = update;
-
-  let ticking = false;
-  function onScrollOrResize() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => { update(); ticking = false; });
-  }
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize, { passive: true });
-
-  window.addEventListener('popstate', () => setTimeout(update, 80));
-  const origPush = history.pushState;
-  history.pushState = function () { origPush.apply(this, arguments); setTimeout(update, 80); };
-  update();
 })();
 
 /* ---------- Mobile nav toggle ---------- */
@@ -3295,7 +3232,6 @@ function __observeReveals(scope) {
     const isOpen = links.classList.toggle('mobile-open');
     toggle.textContent = isOpen ? 'Close' : 'Menu';
     toggle.setAttribute('aria-expanded', String(isOpen));
-    if (window.__ctaUpdate) window.__ctaUpdate();
   });
 })();
 
