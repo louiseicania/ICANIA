@@ -1693,8 +1693,12 @@ main:focus { outline: none; }
   [data-view="shop"] .cta-band-inner { gap: 14px; }
   .shop-cta-line { font-size: 18px; }
   .numbered-row { padding: 40px var(--gutter); gap: 12px; }
-  .reviews-header { flex-direction: column; align-items: flex-start; }
-  .review-tabs { flex-wrap: wrap; gap: 24px; }
+  [data-view="reviews"] .page-header { padding: 24px var(--gutter) 16px; }
+  [data-view="reviews"] .page-header .display-l { font-size: clamp(30px, 8.6vw, 44px); white-space: nowrap; line-height: 1.05; }
+  .reviews-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .reviews-header .body-l { font-size: 15px; line-height: 1.5; }
+  .reviews-all-link { margin-top: 12px; }
+  .review-tabs { flex-wrap: wrap; gap: 24px; margin-top: 20px; padding-top: 18px; padding-bottom: 18px; }
   .seller-card { padding: 32px var(--gutter); }
   .nav-mark { font-size: 24px; }
   .footer-mark { font-size: 36px; }
@@ -2168,7 +2172,7 @@ if ('serviceWorker' in navigator) {
         <h1 class="display-l fade-up fade-up-1">What people say.</h1>
         <div class="fade-up fade-up-2" style="max-width: 380px;">
           <p class="body-l">Two sides of the shop. The buyers who&rsquo;ve picked something off the rail, and the sellers who put it there.</p>
-          <a class="btn-text reviews-all-link" href="https://www.vinted.co.uk/member/115231306-icaniaa?tab=feedback" target="_blank" rel="noopener">Read all 651 reviews on Vinted</a>
+          <a class="btn-text reviews-all-link" href="https://www.vinted.co.uk/member/115231306-icaniaa?tab=feedback" target="_blank" rel="noopener">Read all 651 reviews on Vinted &rarr;</a>
         </div>
       </div>
     </section>
