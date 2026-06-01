@@ -736,6 +736,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   color: var(--accent);
   white-space: nowrap;
 }
+.home-hero-tagline-m { display: none; }
 .hero-cta {
   display: flex;
   flex-direction: column;
@@ -1196,6 +1197,7 @@ main:focus { outline: none; }
   flex-wrap: wrap;
   gap: 32px;
 }
+.reviews-all-link { display: inline-block; margin-top: 18px; }
 .review-tabs {
   display: flex;
   gap: 40px;
@@ -1625,8 +1627,20 @@ main:focus { outline: none; }
   .section { padding: 56px 0; }
   .section-lg { padding: 88px 0; }
   .home-hero { padding: 32px var(--gutter) 48px; }
-  .home-hero-headline { margin-bottom: 32px; font-size: clamp(44px, 13vw, 76px); }
-  .home-hero-foot { gap: 36px; }
+  .home-hero-headline { margin-bottom: 14px; font-size: clamp(44px, 13vw, 76px); }
+  .home-hero-tagline { display: none; }
+  .home-hero-tagline-m {
+    display: block;
+    margin: 0 0 28px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.1;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .home-hero-foot { gap: 28px; }
+  .home-hero-side { order: 0; gap: 16px; }
   .trust { display: grid; grid-template-columns: 1fr 1fr; row-gap: 28px; column-gap: 24px; align-items: start; padding: 8px 0 0; border-bottom: 0; }
   .trust-item { padding-top: 16px; border-top: 1px solid var(--accent-30); }
   .trust-cta { padding-top: 32px; }
@@ -1783,6 +1797,7 @@ if ('serviceWorker' in navigator) {
 <section data-view="home">
 <section class="home-hero">
       <h1 class="home-hero-headline fade-up fade-up-1">Sell your wardrobe without the hassle.</h1>
+      <p class="home-hero-tagline-m fade-up fade-up-1">South West London Clothing Consignment.</p>
       <div class="home-hero-foot">
         <div class="home-hero-steps fade-up fade-up-2">
           <ol class="hero-steps">
@@ -1809,7 +1824,7 @@ if ('serviceWorker' in navigator) {
     <section class="container">
       <div class="trust">
         <div class="trust-item">
-          <span class="trust-num mono-num">712</span>
+          <span class="trust-num mono-num">651</span>
           <span>Five star reviews on Vinted</span>
         </div>
         <div class="trust-item">
@@ -1895,7 +1910,7 @@ if ('serviceWorker' in navigator) {
       <div class="shop-coming-inner fade-up fade-up-3">
         <span class="shop-coming-eyebrow">Browse the rail</span>
         <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
-        <p class="shop-coming-note">Opens on Vinted &middot; 700+ five-star reviews</p>
+        <p class="shop-coming-note">Opens on Vinted &middot; 650+ five-star reviews</p>
       </div>
     </section>
 
@@ -2119,7 +2134,10 @@ if ('serviceWorker' in navigator) {
 <section class="page-header">
       <div class="reviews-header">
         <h1 class="display-l fade-up fade-up-1">What people say.</h1>
-        <p class="body-l fade-up fade-up-2" style="max-width: 380px;">Two sides of the shop. The buyers who&rsquo;ve picked something off the rail, and the sellers who put it there.</p>
+        <div class="fade-up fade-up-2" style="max-width: 380px;">
+          <p class="body-l">Two sides of the shop. The buyers who&rsquo;ve picked something off the rail, and the sellers who put it there.</p>
+          <a class="btn-text reviews-all-link" href="https://www.vinted.co.uk/member/115231306-icaniaa?tab=feedback" target="_blank" rel="noopener">Read all 651 reviews on Vinted</a>
+        </div>
       </div>
     </section>
 
@@ -2133,7 +2151,7 @@ if ('serviceWorker' in navigator) {
         <!-- Reviews injected by script.js -->
       </div>
       <div class="caption-band">
-        <p class="caption" style="color: var(--ink-65); text-transform: uppercase; letter-spacing: 0.22em;">A small selection from over 700 five star reviews on Vinted.</p>
+        <a class="caption" href="https://www.vinted.co.uk/member/115231306-icaniaa?tab=feedback" target="_blank" rel="noopener" style="color: var(--ink-65); text-transform: uppercase; letter-spacing: 0.22em; border-bottom: 1px solid var(--accent-30); padding-bottom: 2px;">A small selection from over 650 reviews on Vinted &mdash; read them all</a>
       </div>
     </section>
 
@@ -2164,7 +2182,7 @@ if ('serviceWorker' in navigator) {
         <p>Icania was started by Louise, a one woman South West London consignment service for women who have wardrobes full of clothes they no longer wear and no time to sell them.</p>
         <p>The business runs on a simple principle: most people who could be making money from their old clothes never will, because the work involved is genuinely tedious. Photographing each piece, writing a description, dealing with messages, packing, posting, handling returns. After two or three items, most people give up.</p>
         <p>Icania does the work. You drop your pieces off, or have them collected, and they reappear on the rail, photographed properly, written up properly, and sold to buyers who already trust the shop. Whatever sells, the proceeds are split fifty fifty.</p>
-        <p>The shop has built up over seven hundred five star reviews on Vinted and a steady base of repeat sellers across South West London. We&rsquo;re selective about what we accept, the curation is the whole point, but we&rsquo;re happy to take a look at almost anything.</p>
+        <p>The shop has built up over six hundred and fifty five star reviews on Vinted and a steady base of repeat sellers across South West London. We&rsquo;re selective about what we accept, the curation is the whole point, but we&rsquo;re happy to take a look at almost anything.</p>
         <p style="font-style: italic; color: var(--ink-70); margin-top: 32px;">More about Louise, the workshop, and how the shop ended up here. Coming soon.</p>
       </div>
     </section>
@@ -2727,79 +2745,199 @@ const PRODUCTS = [
   }
 ];
 const REVIEWS = {
-  "totalBuyerReviews": 712,
+  "totalBuyerReviews": 651,
   "buyers": [
     {
       "stars": 5,
-      "quote": "The dress arrived beautifully wrapped, exactly as described. Faster than any retailer I've ordered from. Will be back.",
-      "name": "Eleanor R.",
+      "quote": "Great Vinted experience. Item as described. Great communication. Super fast delivery. Highly recommended seller.",
+      "name": "samcarron",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Thanks so much. This was a super quick purchase, along with prompt payment. Much appreciated.",
+      "name": "jayamanda",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Quick delivery and item as described.",
+      "name": "kstephenson19",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Excellent seller, super fast postage.",
+      "name": "mbsbazaar",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely pieces. Thank you!",
+      "name": "katiedellal",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely, great communication, always so helpful, thank you.",
+      "name": "maryde210",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Delivered to US no issues, recommended seller!",
+      "name": "77riri77",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great bag, thanks.",
+      "name": "mich220678",
+      "date": "May 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Absolutely gorgeous suit, packed really well and sent out quickly. Brilliant seller xx",
+      "name": "thisisski",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great and lovely seller! Item is exactly as in photo.",
+      "name": "jessica12leo",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great trousers in a perfect condition, thank you!",
+      "name": "swiderka96",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely heels in great condition, thank you!",
+      "name": "alicenaishxox",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Beautiful bag to add to my collection. Packaged well and quick delivery.",
+      "name": "shellalex2026",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great, speedy delivery and just as described. Thank you!",
+      "name": "snodj",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Beautiful colours and design. Many thanks.",
+      "name": "windflu",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Perfect! Thank you! Speedy delivery.",
+      "name": "sueh345",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely and as described. Thanks.",
+      "name": "njm100",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely dress, thank you!",
+      "name": "babyyoda2016",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Scarf vibrant and arrived quickly!",
+      "name": "maybelissima",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great seller. Amazing jacket.",
+      "name": "prettiesallmine",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Fast delivery time, good item, thank you.",
+      "name": "dollydaydreams23",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Great seller, love the dress.",
+      "name": "traceym252",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Gorgeous, thank you.",
+      "name": "laurenheard",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Fabulous seller.",
+      "name": "idapeel1991",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Beautiful jumper, thank you.",
+      "name": "eccles2410",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Lovely dress, thank you.",
+      "name": "jenh609",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Fast communication and delivery.",
+      "name": "selchgat",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Came really quick xxx",
+      "name": "milliesteventon",
+      "date": "April 2026"
+    },
+    {
+      "stars": 5,
+      "quote": "Gorgeous top exactly as described and fast shipping - thank you!",
+      "name": "georgina0905",
       "date": "March 2026"
     },
     {
       "stars": 5,
-      "quote": "Found a Toteme piece I'd been hunting for over a year. Pristine condition, fair price. Top seller.",
-      "name": "Sophie L.",
+      "quote": "Fantastic top, perfect condition. Thank you.",
+      "name": "gdown21",
       "date": "March 2026"
     },
     {
       "stars": 5,
-      "quote": "Genuinely the cleanest, best-photographed Vinted shop I've come across. You can tell someone with an eye is curating.",
-      "name": "Maya P.",
-      "date": "February 2026"
+      "quote": "Looked like the image, good condition and I was overall happy with the item itself.",
+      "name": "lamps.com1",
+      "date": "March 2026"
     },
     {
       "stars": 5,
-      "quote": "Got a vintage silk blouse for \u00a325 that I've worn to three weddings. Bargain.",
-      "name": "Anya K.",
-      "date": "February 2026"
-    },
-    {
-      "stars": 5,
-      "quote": "Lovely communication, item posted same day. Came with a handwritten note which is a nice touch.",
-      "name": "Rosie B.",
-      "date": "February 2026"
-    },
-    {
-      "stars": 4,
-      "quote": "Sizing was a bit smaller than the listing suggested but the fabric and quality were as described. Returned without fuss.",
-      "name": "Hannah T.",
-      "date": "January 2026"
-    },
-    {
-      "stars": 5,
-      "quote": "I keep an eye on this shop weekly. Stock turns over fast and the curation is unusually good.",
-      "name": "Issy M.",
-      "date": "January 2026"
-    },
-    {
-      "stars": 5,
-      "quote": "Acne knit, mint condition, half retail. Couldn't be happier.",
-      "name": "Camille D.",
-      "date": "January 2026"
-    },
-    {
-      "stars": 5,
-      "quote": "First time buying second-hand online and it converted me. Will only use Icania from now on.",
-      "name": "Lucy F.",
-      "date": "December 2025"
-    },
-    {
-      "stars": 5,
-      "quote": "The Reiss coat I got is now my most-worn winter piece. \u00a3100 less than RRP and looks brand new.",
-      "name": "Olivia W.",
-      "date": "December 2025"
-    },
-    {
-      "stars": 5,
-      "quote": "Quick replies, honest about a small mark on the hem, lovely packaging. Faith restored in resale.",
-      "name": "Beatrice H.",
-      "date": "November 2025"
-    },
-    {
-      "stars": 5,
-      "quote": "Bought four pieces over the last six months. Every single one has been exactly as described.",
-      "name": "Charlotte E.",
-      "date": "November 2025"
+      "quote": "Lovely. Thank you.",
+      "name": "kira20048",
+      "date": "March 2026"
     }
   ],
   "sellers": [
