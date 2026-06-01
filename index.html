@@ -121,6 +121,7 @@ a { color: var(--ink); text-decoration: none; }
   line-height: 1.04;
   letter-spacing: -0.008em;
 }
+.shop-title { font-size: clamp(26px, 6.4vw, 92px); white-space: nowrap; line-height: 1.05; }
 .display-m {
   font-family: var(--font-display);
   font-size: clamp(32px, 5vw, 64px);
@@ -1999,8 +2000,8 @@ if ('serviceWorker' in navigator) {
 
 <section data-view="shop" style="display:none;">
 <section class="page-header">
-      <h1 class="display-l fade-up fade-up-1">Currently Vinted Only</h1>
-      <p class="body-l fade-up fade-up-2" style="max-width: 640px; margin-top: 24px;">I&rsquo;m currently setting up my online store by integrating it with the Vinted API, which just means you can browse and buy from my Vinted from one central place. Until then, browse what&rsquo;s available on the Vinted app, all sales will always be protected by Vinted&rsquo;s buyer protection.</p>
+      <h1 class="display-l fade-up fade-up-1 shop-title">Currently Vinted Only</h1>
+      <p class="body-l fade-up fade-up-2" style="max-width: 640px; margin-top: 24px;">I&rsquo;m building my own shop here, linked up to Vinted. Soon you&rsquo;ll browse and buy everything in one place &mdash; you&rsquo;ll still be buying from my Vinted, just from here. For now, shop on the Vinted app. Every sale is protected by Vinted&rsquo;s buyer protection.</p>
     </section>
 
     <section class="shop-coming">
