@@ -36,7 +36,7 @@
 html, body { margin: 0; padding: 0; }
 
 :root {
-  --bg: #EBE4EB;
+  --bg: #F2E9F0;
   --ink: #1F2540;
   --accent: #8E7BA3;
 
@@ -1259,12 +1259,35 @@ main:focus { outline: none; }
 .reviews-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
   padding: 0 var(--gutter);
   max-width: var(--max);
   margin: 0 auto;
-  flex-wrap: wrap;
-  gap: 32px;
+  flex-wrap: nowrap;
+  gap: 48px;
+}
+.reviews-header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.reviews-header-text h1 { margin: 0; }
+.reviews-intro {
+  display: block;
+  white-space: normal;
+  text-wrap: balance;
+  max-width: 600px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-65);
+  margin: 16px 0 0;
+}
+.reviews-hero-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: 300px;
+  margin-top: -48px;
 }
 .reviews-all-link { display: inline-block; margin-top: 18px; }
 .review-tabs {
@@ -1276,7 +1299,7 @@ main:focus { outline: none; }
   max-width: var(--max);
   margin: 24px auto 0;
 }
-[data-view="reviews"] .page-header { padding-top: 64px; padding-bottom: 24px; }
+[data-view="reviews"] .page-header { padding-top: 64px; padding-bottom: 8px; }
 .review-tab {
   background: none;
   border: 0;
@@ -1355,14 +1378,25 @@ main:focus { outline: none; }
 .seller-stats b { color: var(--accent); font-weight: 600; letter-spacing: 0.06em; }
 
 .about-hero {
-  padding: 120px var(--gutter);
+  padding: 72px var(--gutter) 36px;
   max-width: var(--max);
   margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
 }
-.about-hero-mark { display: none; }
+.about-hero h1 { margin: 0; flex: 0 1 auto; }
+.about-hero-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: 320px;
+  margin-top: -8px;
+}
 .about-body {
   max-width: 760px;
-  padding: 80px var(--gutter);
+  padding: 40px var(--gutter) 80px;
   margin: 0 auto;
   border-top: var(--hair-strong);
 }
@@ -1671,6 +1705,7 @@ main:focus { outline: none; }
 }
 
 @media (max-width: 960px) {
+  :root { --bg: #EBE4EB; }
   .three-step { grid-template-columns: repeat(2, 1fr); }
   .step-cell { min-height: 0; justify-content: flex-start; gap: 16px; padding: 28px 36px 36px; }
   .step-cell:nth-child(2) { border-right: 0; }
@@ -1699,7 +1734,9 @@ main:focus { outline: none; }
   .sell-aftermath-grid { grid-template-columns: 1fr; gap: 12px; }
   .sell-aftermath-grid > div:first-child + div .next-step:first-child { padding-top: 4px; }
   .sell-aftermath { padding: 64px var(--gutter); }
-  .about-hero { padding: 88px var(--gutter); }
+  .about-hero { display: block; padding: 88px var(--gutter); }
+  .about-hero-mark { display: none; }
+  .reviews-hero-mark { display: none; }
   .about-body { padding: 56px var(--gutter); }
   .page-header { padding: 80px var(--gutter) 48px; }
   .legal { padding: 96px var(--gutter); }
@@ -1802,7 +1839,7 @@ main:focus { outline: none; }
   .trust-cta .btn-arrow { width: 100%; text-align: center; }
   .home-hiw-head { padding-top: 40px; }
   .btn.btn-arrow, .btn-vinted { font-size: 10px; letter-spacing: 0.16em; padding: 18px 28px; }
-  .about-hero { padding: 56px var(--gutter) 28px; position: relative; }
+  .about-hero { display: block; padding: 56px var(--gutter) 28px; position: relative; }
   .about-hero h1 { position: relative; z-index: 1; }
   .about-hero-mark { display: block; position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); width: clamp(96px, 28vw, 116px); height: auto; }
   .about-body { padding: 30px var(--gutter) 24px; }
@@ -1827,6 +1864,7 @@ main:focus { outline: none; }
   [data-view="reviews"] .page-header { padding: 24px var(--gutter) 16px; }
   [data-view="reviews"] .page-header .display-l { font-size: clamp(30px, 8.6vw, 44px); white-space: nowrap; line-height: 1.05; }
   .reviews-header { flex-direction: column; align-items: flex-start; text-align: left; gap: 10px; padding-left: 0; padding-right: 0; }
+  .reviews-intro { display: block; white-space: normal; margin: 10px 0 0; max-width: 380px; }
   .reviews-header .body-l { font-size: 15px; line-height: 1.5; }
   .reviews-header .reviews-all-link { margin-top: 10px; font-family: var(--font); font-style: normal; font-size: 13px; letter-spacing: 0.01em; }
   .reviews-all-link { margin-top: 12px; }
@@ -2332,11 +2370,12 @@ if ('serviceWorker' in navigator) {
 <section data-view="reviews" style="display:none;">
 <section class="page-header">
       <div class="reviews-header">
-        <h1 class="display-l fade-up fade-up-1">What people say.</h1>
-        <div class="fade-up fade-up-2" style="max-width: 380px;">
-          <p class="body-l">Two sides of the shop. The buyers who&rsquo;ve picked something off the rail, and the sellers who put it there.</p>
+        <div class="reviews-header-text fade-up fade-up-1">
+          <h1 class="display-l">What people say.</h1>
+          <p class="body-l reviews-intro">Please take a look at reviews from any of the 651 who have bought from Icania and left a review, or at reviews from any individuals whose clothes I have sold for them.</p>
           <a class="btn-text reviews-all-link" href="https://www.vinted.co.uk/member/115231306-icaniaa?tab=feedback" target="_blank" rel="noopener">Read all 651 reviews on Vinted &rarr;</a>
         </div>
+        <img class="reviews-hero-mark" src="/fairy-mark.png" alt="">
       </div>
     </section>
 
