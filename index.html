@@ -710,7 +710,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 52px; height: auto; margin: 0 22px; display: block; opacity: 0.85; will-change: transform; }
+.section-mark img { width: 76px; height: auto; margin: 0 24px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -1360,6 +1360,7 @@ main:focus { outline: none; }
   max-width: var(--max);
   margin: 0 auto;
 }
+.about-hero-mark { display: none; }
 .about-body {
   max-width: 760px;
   padding: 80px var(--gutter);
@@ -1801,8 +1802,11 @@ main:focus { outline: none; }
   .trust-cta .btn-arrow { width: 100%; text-align: center; }
   .home-hiw-head { padding-top: 40px; }
   .btn.btn-arrow, .btn-vinted { font-size: 10px; letter-spacing: 0.16em; padding: 18px 28px; }
-  .about-hero { padding: 56px var(--gutter); }
-  .about-body { padding: 48px var(--gutter); }
+  .about-hero { padding: 56px var(--gutter) 28px; display: flex; align-items: center; gap: 12px; }
+  .about-hero h1 { flex: 0 1 auto; min-width: 0; }
+  .about-hero-mark { display: block; flex: 0 0 auto; width: clamp(72px, 22vw, 116px); height: auto; align-self: center; }
+  .about-body { padding: 30px var(--gutter) 24px; }
+  [data-view="about"] .cta-band { padding: 32px 0; }
   .sell-hero { padding: 36px var(--gutter) 28px; }
   .sell-intro .body-l { font-size: 13px; line-height: 1.5; }
   .sell-form-section { padding: 32px var(--gutter) 48px; }
@@ -1828,6 +1832,7 @@ main:focus { outline: none; }
   .review-tabs { flex-wrap: wrap; gap: 24px; margin-top: 20px; padding-top: 18px; padding-bottom: 18px; }
   .nav-mark { font-size: 24px; }
   .footer-mark { font-size: 36px; }
+  .footer-mark .spark { width: 46px; height: 46px; }
 }
 
   </style>
@@ -2004,15 +2009,15 @@ if ('serviceWorker' in navigator) {
         <div class="trust-stats">
           <div class="trust-item">
             <span class="trust-num mono-num">651</span>
-            <span class="trust-item-label">Five-star reviews on Vinted</span>
+            <span class="trust-item-label">five-star reviews on vinted</span>
           </div>
           <div class="trust-item">
             <span class="trust-num mono-num">50/50</span>
-            <span class="trust-item-label">Split with sellers</span>
+            <span class="trust-item-label">split with sellers</span>
           </div>
           <div class="trust-item">
             <span class="trust-num mono-num">3</span>
-            <span class="trust-item-label">Months on the rail</span>
+            <span class="trust-item-label">month selling period</span>
           </div>
         </div>
         <p class="trust-location">
@@ -2361,6 +2366,7 @@ if ('serviceWorker' in navigator) {
 <section data-view="about" style="display:none;">
 <section class="about-hero">
       <h1 class="display-xl fade-up fade-up-1">A small,<br>careful operation.</h1>
+      <img class="about-hero-mark fade-up fade-up-2" src="/fairy-mark.png" alt="">
     </section>
 
     <section class="about-body">
