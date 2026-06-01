@@ -788,11 +788,16 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 12px 32px -10px rgba(31, 37, 64, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.65);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px) scale(0.94);
-  transition: opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(calc(var(--cta-lift, 0px) * -1));
+  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
   z-index: 80;
+  animation: cta-enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes cta-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .sticky-sell-cta::after {
   content: "\2192";
@@ -801,7 +806,6 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   color: var(--accent);
   transition: transform 0.3s ease;
 }
-.sticky-sell-cta.visible { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
 @media (hover: hover) {
   .sticky-sell-cta:hover { background: rgba(142, 123, 163, 0.28); }
   .sticky-sell-cta:hover::after { transform: translateX(3px); }
@@ -1307,35 +1311,22 @@ main:focus { outline: none; }
   color: var(--ink-65);
 }
 
-.seller-card {
-  background: var(--bg);
-  padding: 64px 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  border-bottom: var(--hair-strong);
-  max-width: var(--max);
-  margin: 0 auto;
+.seller-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--ink-12);
 }
-.seller-quote {
-  font-family: var(--font-display);
-  font-size: clamp(24px, 2.8vw, 36px);
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-  max-width: 880px;
-  font-weight: 400;
-}
-.seller-meta {
+.seller-stats {
   display: flex;
-  gap: 56px;
+  gap: 22px;
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  flex-wrap: wrap;
+  color: var(--ink-65);
 }
-.seller-meta div { display: flex; flex-direction: column; gap: 6px; }
-.seller-meta .label { color: var(--ink-45); font-size: 10px; letter-spacing: 0.22em; }
-.seller-meta .value { font-size: 13px; letter-spacing: 0.14em; color: var(--ink); }
+.seller-stats b { color: var(--accent); font-weight: 600; letter-spacing: 0.06em; }
 
 .about-hero {
   padding: 120px var(--gutter);
@@ -1633,7 +1624,7 @@ main:focus { outline: none; }
   .step-cell:nth-child(2) { border-right: 0; }
   .step-cell:nth-child(1), .step-cell:nth-child(2) { border-bottom: var(--hair); }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
-  .review-grid { grid-template-columns: repeat(2, 1fr); }
+  .review-grid, .seller-list { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
   .home-hero-headline { max-width: none; text-align: left; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); }
@@ -1653,7 +1644,6 @@ main:focus { outline: none; }
   .legal { padding: 96px var(--gutter); }
   .cta-band { padding: 64px 0; }
   .numbered-row { grid-template-columns: 1fr; gap: 16px; padding: 56px var(--gutter); }
-  .seller-card { padding: 48px var(--gutter); }
   .section { padding: 80px 0; }
 }
 
@@ -1698,7 +1688,7 @@ main:focus { outline: none; }
   .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 12px; padding: 24px var(--gutter); }
   .step-cell:last-child { border-bottom: 0; }
   .product-grid { grid-template-columns: 1fr; }
-  .review-grid { grid-template-columns: 1fr; }
+  .review-grid, .seller-list { grid-template-columns: 1fr; }
   .footer { margin-top: 24px; padding-top: 48px; }
   .footer-grid { grid-template-columns: 1fr; gap: 40px; }
   .footer-base { flex-direction: column; gap: 8px; align-items: flex-start; }
@@ -1760,7 +1750,6 @@ main:focus { outline: none; }
   .reviews-header .body-l { font-size: 15px; line-height: 1.5; }
   .reviews-all-link { margin-top: 12px; }
   .review-tabs { flex-wrap: wrap; gap: 24px; margin-top: 20px; padding-top: 18px; padding-bottom: 18px; }
-  .seller-card { padding: 32px var(--gutter); }
   .nav-mark { font-size: 24px; }
   .footer-mark { font-size: 36px; }
 }
@@ -3213,7 +3202,6 @@ function __observeReveals(scope) {
   const cta = document.querySelector('.sticky-sell-cta');
   if (!cta) return;
   const form = document.querySelector('form[data-sell-form]');
-  const footer = document.querySelector('.footer');
 
   function onSell() {
     return window.location.pathname.replace(/\/$/, '') === '/sell';
@@ -3233,41 +3221,66 @@ function __observeReveals(scope) {
     }, 140);
   });
 
-  // Apple-style motion: duck away while scrolling down, return on scroll-up or
-  // when scrolling stops, so it's present without sitting in the reader's way.
-  let lastY = window.scrollY;
-  let duck = false;
-  let idle;
+  // Always present in the bottom-right. Rather than hide when something it would
+  // cover sits underneath, it magnetically lifts up just enough to clear the
+  // obstacle (buttons, footer links/buttons), then settles back down.
+  const GAP = 14;          // breathing room kept between the pill and an obstacle
+  const MAX_LIFT = 320;    // never float more than this far up
 
-  function navOpen() {
-    const links = document.querySelector('.nav-links');
-    return !!(links && links.classList.contains('mobile-open'));
+  // The pill's resting rectangle (at lift 0), derived from its fixed offsets so
+  // we can measure overlaps without the current lift confusing the maths.
+  function restRect() {
+    const cs = getComputedStyle(cta);
+    const w = cta.offsetWidth;
+    const h = cta.offsetHeight;
+    const bottom = parseFloat(cs.bottom) || 20;
+    const right = parseFloat(cs.right) || 20;
+    const left = window.innerWidth - right - w;
+    const top = window.innerHeight - bottom - h;
+    return { left, right: left + w, top, bottom: top + h };
   }
-  // Adaptive: never cover the form or the footer (the things people need to read).
-  function covers(el, margin) {
-    if (!el || getComputedStyle(el).display === 'none') return false;
-    const r = el.getBoundingClientRect();
-    return r.top < window.innerHeight - margin && r.bottom > margin;
+
+  function visible(el) {
+    if (!el || !el.offsetParent && el !== document.body) return false;
+    const cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden';
   }
+
   function update() {
-    const past = window.scrollY > 200;
-    const blocked = covers(form, 40) || covers(footer, 0) || navOpen();
-    cta.classList.toggle('visible', past && !blocked && !duck);
+    const pill = restRect();
+    const obstacles = document.querySelectorAll(
+      '.btn, .footer a, .footer button, .next-step a, .cta-band a'
+    );
+    let lift = 0;
+    obstacles.forEach((el) => {
+      if (el === cta || !visible(el)) return;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      // Horizontal overlap with the pill's column?
+      if (r.right <= pill.left - GAP || r.left >= pill.right + GAP) return;
+      // Obstacle sits within the pill's vertical band (at rest)?
+      if (r.bottom <= pill.top - GAP || r.top >= pill.bottom + GAP) return;
+      // Lift just enough to clear above this obstacle's top edge.
+      const needed = pill.bottom - r.top + GAP;
+      if (needed > lift) lift = needed;
+    });
+    lift = Math.max(0, Math.min(MAX_LIFT, lift));
+    cta.style.setProperty('--cta-lift', lift + 'px');
   }
   window.__ctaUpdate = update;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > lastY + 6) duck = true;
-    else if (y < lastY - 6) duck = false;
-    lastY = y;
-    update();
-    clearTimeout(idle);
-    idle = setTimeout(() => { duck = false; update(); }, 500);
-  }, { passive: true });
 
-  window.addEventListener('popstate', () => { duck = false; setTimeout(update, 80); });
+  let ticking = false;
+  function onScrollOrResize() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { update(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+  window.addEventListener('popstate', () => setTimeout(update, 80));
   const origPush = history.pushState;
-  history.pushState = function () { origPush.apply(this, arguments); duck = false; setTimeout(update, 80); };
+  history.pushState = function () { origPush.apply(this, arguments); setTimeout(update, 80); };
   update();
 })();
 
@@ -3512,14 +3525,14 @@ window.__renderReviews = (function () {
     const sellerList = sellerWrap.querySelector('.seller-list');
     if (sellerList) {
       sellerList.innerHTML = REVIEWS.sellers.map((s) =>
-        '<article class="seller-card">' +
-          '<p class="seller-quote">&ldquo;' + s.quote + '&rdquo;</p>' +
-          '<div class="seller-meta">' +
-            '<div><span class="label">Seller</span><span class="value">' + s.name + '</span></div>' +
-            '<div><span class="label">Pieces sold</span><span class="value">' + s.pieces + '</span></div>' +
-            '<div><span class="label">Earned</span><span class="value">£' + s.earned + '</span></div>' +
-            '<div><span class="label">Area</span><span class="value">' + s.area + '</span></div>' +
+        '<article class="review-card">' +
+          '<div class="review-stars">' + '★'.repeat(5) + '</div>' +
+          '<p class="review-quote">' + s.quote + '</p>' +
+          '<div class="seller-stats">' +
+            '<span><b>' + s.pieces + '</b> pieces sold</span>' +
+            '<span><b>£' + s.earned + '</b> earned</span>' +
           '</div>' +
+          '<div class="review-meta"><span>' + s.name + '</span><span>' + s.area + '</span></div>' +
         '</article>'
       ).join('');
     }
