@@ -995,7 +995,7 @@ main:focus { outline: none; }
   justify-content: center;
   padding: 48px var(--gutter) 0;
 }
-.home-hiw-head { padding-top: 96px; padding-bottom: 32px; }
+.home-hiw-head { padding-top: 96px; padding-bottom: 0; }
 
 .three-step {
   display: grid;
@@ -1003,9 +1003,9 @@ main:focus { outline: none; }
   border-bottom: var(--hair-strong);
 }
 .step-cell {
-  padding: 64px 36px;
+  padding: 44px 36px;
   border-right: var(--hair);
-  min-height: 320px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1551,7 +1551,7 @@ main:focus { outline: none; }
 
 @media (max-width: 960px) {
   .three-step { grid-template-columns: repeat(2, 1fr); }
-  .step-cell { min-height: 0; justify-content: flex-start; gap: 16px; padding: 48px 36px; }
+  .step-cell { min-height: 0; justify-content: flex-start; gap: 16px; padding: 28px 36px 36px; }
   .step-cell:nth-child(2) { border-right: 0; }
   .step-cell:nth-child(1), .step-cell:nth-child(2) { border-bottom: var(--hair); }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1617,7 +1617,7 @@ main:focus { outline: none; }
   :root { --gutter: 24px; }
   .section-mark { display: none; }
   .three-step { grid-template-columns: 1fr; }
-  .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 12px; padding: 32px var(--gutter); }
+  .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 12px; padding: 24px var(--gutter); }
   .step-cell:last-child { border-bottom: 0; }
   .product-grid { grid-template-columns: 1fr; }
   .review-grid { grid-template-columns: 1fr; }
@@ -1847,7 +1847,7 @@ if ('serviceWorker' in navigator) {
 
     <section>
       <div class="container home-hiw-head">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; flex-wrap: wrap; gap: 24px;">
           <div>
             <h2 class="display-l">How it works.</h2>
           </div>
