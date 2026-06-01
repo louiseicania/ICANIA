@@ -1035,6 +1035,8 @@ main:focus { outline: none; }
   padding: 48px var(--gutter) 0;
 }
 .home-hiw-head { padding-top: 96px; padding-bottom: 0; }
+#home-how-it-works { scroll-margin-top: 88px; }
+.home-hiw-more { padding-top: 28px; padding-bottom: 0; }
 
 .three-step {
   display: grid;
@@ -1894,7 +1896,7 @@ if ('serviceWorker' in navigator) {
             <li><span class="hero-step-n">2</span><span>I publish your clothes on my Vinted account.</span></li>
             <li><span class="hero-step-n">3</span><span>Your clothes sell, we split the money, I handle shipping.</span></li>
           </ol>
-          <a class="btn-text" href="/how-it-works">Read more</a>
+          <a class="btn-text" href="#home-how-it-works" data-scroll>Read more</a>
         </div>
         <div class="home-hero-side fade-up fade-up-3">
           <p class="home-hero-tagline">South West London Clothing Consignment.</p>
@@ -1938,7 +1940,7 @@ if ('serviceWorker' in navigator) {
       </div>
     </section>
 
-    <section>
+    <section id="home-how-it-works">
       <div class="container home-hiw-head">
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; flex-wrap: wrap; gap: 24px;">
           <div>
@@ -1975,6 +1977,9 @@ if ('serviceWorker' in navigator) {
             <p class="step-body">Whatever sells, we split fifty fifty. Anything still on the rail at month four goes back to you or to charity.</p>
           </div>
         </div>
+      </div>
+      <div class="container home-hiw-more">
+        <a class="btn-text" href="/how-it-works">Read more</a>
       </div>
     </section>
 
@@ -3195,6 +3200,18 @@ function __observeReveals(scope) {
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update, { passive: true });
   update();
+})();
+
+/* ---------- In-page smooth scroll for [data-scroll] anchors ---------- */
+(function () {
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('a[data-scroll][href^="#"]');
+    if (!link) return;
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 })();
 
 /* ---------- Floating "Submit enquiry" CTA (mobile, glass, adaptive) ---------- */
