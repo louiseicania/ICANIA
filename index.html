@@ -211,6 +211,12 @@ a { color: var(--ink); text-decoration: none; }
   height: 14px;
   margin-bottom: 2px;
 }
+.nav-mark .nav-anim {
+  width: auto;
+  height: 36px;
+  display: block;
+  margin: -4px 0;
+}
 .spark { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease; }
 @media (hover: hover) {
   .nav-mark:hover .spark,
@@ -1570,11 +1576,13 @@ main:focus { outline: none; }
 
 @media (max-width: 640px) {
   :root { --gutter: 24px; }
+  .section-mark { display: none; }
   .three-step { grid-template-columns: 1fr; }
   .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 12px; padding: 32px var(--gutter); }
   .step-cell:last-child { border-bottom: 0; }
   .product-grid { grid-template-columns: 1fr; }
   .review-grid { grid-template-columns: 1fr; }
+  .footer { margin-top: 24px; padding-top: 48px; }
   .footer-grid { grid-template-columns: 1fr; gap: 40px; }
   .footer-base { flex-direction: column; gap: 8px; align-items: flex-start; }
   .section { padding: 56px 0; }
@@ -1693,7 +1701,7 @@ if ('serviceWorker' in navigator) {
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="nav-mark" href="/"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.2 10.8 L24 12 L13.2 13.2 L12 24 L10.8 13.2 L0 12 L10.8 10.8 Z"/></svg></span>Icania</a>
+    <a class="nav-mark" href="/"><img class="nav-anim" src="/fairy_stopmotion.gif" alt="" aria-hidden="true" width="200" height="200">Icania</a>
     <nav>
       <button class="nav-toggle" aria-expanded="false">Menu</button>
       <ul class="nav-links">
