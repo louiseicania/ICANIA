@@ -1827,8 +1827,12 @@ main:focus { outline: none; }
   }
 }
 
+/* Line breaks that only apply on mobile (e.g. to avoid widows). */
+.mob-break { display: none; }
+
 @media (max-width: 640px) {
   :root { --gutter: 24px; }
+  .mob-break { display: inline; }
   .section-mark { display: none; }
   .three-step { grid-template-columns: 1fr; border-bottom: 0; }
   .step-cell { border-right: 0; border-bottom: var(--hair); min-height: 0; justify-content: flex-start; gap: 8px; padding: 18px var(--gutter); }
@@ -2477,7 +2481,7 @@ if ('serviceWorker' in navigator) {
 <section data-view="faq" style="display:none;">
 <section class="page-header">
       <h1 class="display-l fade-up fade-up-1">Frequently asked.</h1>
-      <p class="body-l fade-up fade-up-2" style="margin-top: 24px;">Anything not answered here, email <a href="mailto:louise@icania.co.uk" style="border-bottom: 1px solid var(--ink);">louise@icania.co.uk</a>. We usually reply within a day.</p>
+      <p class="body-l fade-up fade-up-2" style="margin-top: 24px;">Anything not answered here, email <br class="mob-break"><a href="mailto:louise@icania.co.uk" style="border-bottom: 1px solid var(--ink);">louise@icania.co.uk</a>. <br class="mob-break">We usually reply within a day.</p>
     </section>
 
     <div class="faq-list">
