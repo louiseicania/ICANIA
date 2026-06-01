@@ -1443,6 +1443,25 @@ main:focus { outline: none; }
     margin-top: -32px;
   }
 }
+/* FAQ hero: same desktop-only fairy treatment as How-it-works / Reviews / About. */
+.faq-hero-mark { display: none; }
+@media (min-width: 961px) {
+  .page-header.faq-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 48px;
+  }
+  .faq-hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+  .faq-hero-text h1 { margin: 0; }
+  .faq-hero-mark {
+    display: block;
+    flex: 0 0 auto;
+    width: auto;
+    height: 260px;
+    margin-top: -32px;
+  }
+}
 .faq-list {
   border-top: var(--hair-strong);
   max-width: var(--max);
@@ -2479,9 +2498,12 @@ if ('serviceWorker' in navigator) {
 </section>
 
 <section data-view="faq" style="display:none;">
-<section class="page-header">
-      <h1 class="display-l fade-up fade-up-1">Frequently asked.</h1>
-      <p class="body-l fade-up fade-up-2" style="margin-top: 24px;">Anything not answered here, email <br class="mob-break"><a href="mailto:louise@icania.co.uk" style="border-bottom: 1px solid var(--ink);">louise@icania.co.uk</a>. <br class="mob-break">We usually reply within a day.</p>
+<section class="page-header faq-hero">
+      <div class="faq-hero-text fade-up fade-up-1">
+        <h1 class="display-l">Frequently asked.</h1>
+        <p class="body-l" style="margin-top: 24px;">Anything not answered here, email <br class="mob-break"><a href="mailto:louise@icania.co.uk" style="border-bottom: 1px solid var(--ink);">louise@icania.co.uk</a>. <br class="mob-break">We usually reply within a day.</p>
+      </div>
+      <img class="faq-hero-mark" src="/fairy-mark.png" alt="">
     </section>
 
     <div class="faq-list">
