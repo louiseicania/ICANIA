@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" as="image" href="/fairy_loader.gif">
   <link rel="preload" as="image" href="/fairy_stopmotion.gif">
   <meta name="theme-color" content="#1F2540">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1714,7 +1715,7 @@ main:focus { outline: none; }
 <button class="sticky-sell-cta" type="button" aria-label="Jump to sell enquiry form">Submit enquiry</button>
 <div id="page-loader" aria-hidden="true">
   <div class="page-loader-stack">
-    <img src="fairy_stopmotion.gif" alt="Icania" width="200" height="200">
+    <img src="fairy_loader.gif" alt="Icania" width="200" height="200">
     <p class="page-loader-mark">Icania</p>
   </div>
 </div>
@@ -1780,6 +1781,12 @@ window.__loader = (function () {
   L.begin({ immediate: true });
   var gates = 1;
   function clear() { if (--gates <= 0) L.end(); }
+  // Hold for one full fairy cycle so the animation always plays in full, no
+  // matter how fast the page loads. The loader GIF runs 15 frames x 50ms = 750ms;
+  // a small buffer covers decode/start jitter (esp. on mobile). On slower loads
+  // the page gates below keep it up longer and the GIF simply loops.
+  gates++;
+  setTimeout(clear, 820);
   if (document.fonts && document.fonts.ready) {
     gates++;
     document.fonts.ready.then(clear, clear);
