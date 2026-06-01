@@ -36,7 +36,7 @@
 html, body { margin: 0; padding: 0; }
 
 :root {
-  --bg: #F4EEF7;
+  --bg: #EBE4EB;
   --ink: #1F2540;
   --accent: #8E7BA3;
 
@@ -193,7 +193,7 @@ a { color: var(--ink); text-decoration: none; }
 /* iOS large-title -> compact: once scrolled past the hero, the bar shrinks
    and its backdrop turns to translucent frosted glass. */
 .nav.scrolled {
-  background: rgba(244, 238, 247, 0.72);
+  background: rgba(235, 228, 235, 0.72);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom-color: var(--accent-30);
@@ -710,7 +710,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 30px; height: auto; margin: 0 18px; display: block; opacity: 0.85; will-change: transform; }
+.section-mark img { width: 52px; height: auto; margin: 0 22px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -1009,25 +1009,26 @@ main:focus { outline: none; }
   border-bottom: var(--hair-strong);
   padding: 56px 0;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 28px 72px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 28px;
 }
 .trust-stats {
   display: flex;
-  align-items: flex-end;
-  gap: 48px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: nowrap;
 }
 .trust-item {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 }
 .trust-location {
   margin: 0;
+  align-self: flex-end;
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -1038,14 +1039,13 @@ main:focus { outline: none; }
   color: var(--accent);
 }
 .trust-location-mark {
-  display: inline-flex;
+  display: none;
   color: var(--accent);
   opacity: 0.85;
 }
 .trust-location-mark img { width: 18px; height: auto; display: block; }
 .trust-num {
   display: inline-block;
-  align-self: flex-start;
   border: 1px solid var(--accent-30);
   border-radius: 999px;
   padding: 10px 28px;
@@ -1061,7 +1061,8 @@ main:focus { outline: none; }
   font-size: 14px;
   line-height: 1.4;
   color: var(--ink-65);
-  max-width: 16ch;
+  text-align: center;
+  white-space: nowrap;
 }
 .trust-cta {
   display: flex;
@@ -1678,8 +1679,9 @@ main:focus { outline: none; }
   .review-grid, .seller-list { columns: 2; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 24px; align-items: start; }
   .footer-group { display: flex; flex-direction: column; gap: 28px; }
-  .footer-group-b { align-self: end; }
+  .footer-group-b { align-self: stretch; justify-content: space-between; }
   .footer-col-browse, .footer-col-service { padding-top: 0; }
+  .footer-group-b .footer-col-browse { padding-top: 48px; } /* clears the brand logo so Browse lines up with the tagline, not the Icania mark */
   .footer-col-legal { align-self: stretch; }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
   .home-hero-headline { max-width: none; text-align: left; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); }
@@ -1786,6 +1788,7 @@ main:focus { outline: none; }
   .trust-item { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid var(--accent-30); }
   .trust-num { grid-column: 1; justify-self: center; align-self: center; padding: 8px 20px; font-size: clamp(30px, 8vw, 40px); }
   .trust-item-label { grid-column: 2; max-width: none; font-size: 13px; text-align: left; white-space: nowrap; }
+  .trust-location-mark { display: inline-flex; }
   .trust-location {
     margin-top: 20px;
     padding-top: 18px;
