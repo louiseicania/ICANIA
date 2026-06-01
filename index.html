@@ -159,6 +159,7 @@ a { color: var(--ink); text-decoration: none; }
   flex: 0 0 auto;
 }
 .spark svg { display: block; width: 100%; height: 100%; }
+.spark img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
 /* ---------- Layout primitives ---------- */
 
@@ -309,7 +310,7 @@ a { color: var(--ink); text-decoration: none; }
   gap: 14px;
   line-height: 1;
 }
-.footer-mark .spark { color: var(--accent); width: 22px; height: 22px; margin-bottom: 4px; }
+.footer-mark .spark { color: var(--accent); width: 30px; height: 30px; margin-bottom: 4px; }
 .footer-tag {
   font-family: var(--font);
   font-size: 14px;
@@ -676,7 +677,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark svg { margin: 0 18px; display: block; }
+.section-mark img { width: 30px; height: auto; margin: 0 18px; display: block; opacity: 0.85; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -979,6 +980,7 @@ main:focus { outline: none; }
   color: var(--accent);
   opacity: 0.85;
 }
+.trust-location-mark img { width: 18px; height: auto; display: block; }
 .trust-num {
   position: relative;
   padding-bottom: 8px;
@@ -1850,7 +1852,7 @@ if ('serviceWorker' in navigator) {
     </section>
 
     <div class="section-mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0 L13.2 10.8 L24 12 L13.2 13.2 L12 24 L10.8 13.2 L0 12 L10.8 10.8 Z"/></svg>
+      <img src="fairy-mark.png" alt="">
     </div>
 
     <section class="container">
@@ -1871,7 +1873,7 @@ if ('serviceWorker' in navigator) {
         </div>
         <p class="trust-location">
           <span class="trust-location-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 0 L13.2 10.8 L24 12 L13.2 13.2 L12 24 L10.8 13.2 L0 12 L10.8 10.8 Z"/></svg>
+            <img src="fairy-mark.png" alt="">
           </span>
           Serving South West London only
         </p>
@@ -2477,7 +2479,7 @@ if ('serviceWorker' in navigator) {
 <footer class="footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-mark"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.2 10.8 L24 12 L13.2 13.2 L12 24 L10.8 13.2 L0 12 L10.8 10.8 Z"/></svg></span>Icania</div>
+      <div class="footer-mark"><span class="spark" aria-hidden="true"><img src="fairy-mark.png" alt=""></span>Icania</div>
       <p class="footer-tag">South West London womenswear consignment. We do the work. You keep half.</p>
     </div>
     <div>
