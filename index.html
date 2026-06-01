@@ -216,6 +216,10 @@ a { color: var(--ink); text-decoration: none; }
   height: 36px;
   display: block;
   margin: -4px 0;
+  /* Promote to its own GPU layer so the GIF keeps animating independently of
+     the nav's backdrop-filter, which otherwise only repaints on scroll (iOS). */
+  transform: translateZ(0);
+  will-change: transform;
 }
 .spark { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease; }
 @media (hover: hover) {
