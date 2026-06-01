@@ -738,41 +738,30 @@ function __observeReveals(scope) {
   setView(pathToView(window.location.pathname));
 })();
 
-/* ---------- Scroll progress bar ---------- */
-(function () {
-  const bar = document.getElementById('scroll-progress');
-  if (!bar) return;
-  function update() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
-    bar.style.width = pct + '%';
-  }
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
-})();
-
-/* ---------- Header compaction + gentle fairy parallax ---------- */
+/* ---------- Header compaction + big-fairy float tilt ---------- */
+// The big section fairies tilt on rotateX as they pass through the viewport so
+// they read as "floating off the page." Tilt is stronger on desktop. This is a
+// scroll-driven *tilt*, not a spin: section marks never rotate on Z.
 (function () {
   var nav = document.querySelector('.nav');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var marks = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.section-mark img'));
   var ticking = false;
-
   function frame() {
     ticking = false;
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
     if (nav) nav.classList.toggle('scrolled', y > 28);
     if (marks.length) {
       var vh = window.innerHeight;
+      var desktop = window.innerWidth >= 720;
+      var tilt = desktop ? -34 : -18;   // stronger float on desktop
+      var driftK = desktop ? -0.20 : -0.16;
       for (var i = 0; i < marks.length; i++) {
         var r = marks[i].getBoundingClientRect();
         var offset = (r.top + r.height / 2) - vh / 2;
-        var drift = offset * -0.16;
-        // normalised -1..1 position across the viewport, drives a 3D tilt so the
-        // fairy reads as floating off the page rather than sitting flat on it
+        var drift = offset * driftK;
         var norm = Math.max(-1, Math.min(1, offset / (vh / 2)));
-        var rotX = norm * -22;
+        var rotX = norm * tilt;
         marks[i].style.transform =
           'perspective(680px) translateY(' + drift.toFixed(1) + 'px) rotateX(' + rotX.toFixed(1) + 'deg)';
       }

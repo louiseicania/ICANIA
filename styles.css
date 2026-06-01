@@ -162,17 +162,13 @@ a { color: var(--ink); text-decoration: none; }
   z-index: 100;
   background: var(--bg);
   border-bottom: var(--hair-strong);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background 0.35s ease, backdrop-filter 0.35s ease,
+  transition: background 0.35s ease,
               border-color 0.35s ease, box-shadow 0.35s ease;
 }
 /* iOS large-title -> compact: once scrolled past the hero, the bar shrinks
    and its backdrop turns to translucent frosted glass. */
 .nav.scrolled {
-  background: rgba(235, 228, 235, 0.72);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: rgba(235, 228, 235, 0.95);
   border-bottom-color: var(--accent-30);
   box-shadow: 0 10px 30px -24px rgba(31, 37, 64, 0.5);
 }
@@ -214,16 +210,8 @@ a { color: var(--ink); text-decoration: none; }
   height: 36px;
   display: block;
   margin: -4px 0;
-  /* Promote to its own GPU layer so the GIF keeps animating independently of
-     the nav's backdrop-filter, which otherwise only repaints on scroll (iOS). */
-  transform: translateZ(0);
-  will-change: transform;
 }
-.spark { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease; }
-@media (hover: hover) {
-  .nav-mark:hover .spark,
-  .footer-mark:hover .spark { transform: rotate(72deg); }
-}
+.spark { transition: color 0.4s ease; }
 .nav-links {
   display: flex;
   gap: 40px;
@@ -763,18 +751,6 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   text-align: center;
 }
 
-/* ---------- Scroll progress bar ---------- */
-#scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 0;
-  background: var(--accent);
-  z-index: 200;
-  transition: width 0.05s linear;
-  pointer-events: none;
-}
 
 /* ---------- Sticky Sell CTA (only on /sell after scroll past hero) ---------- */
 .sticky-sell-cta {
@@ -785,9 +761,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   align-items: center;
   gap: 9px;
   padding: 13px 22px;
-  background: rgba(142, 123, 163, 0.12);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  backdrop-filter: blur(10px) saturate(140%);
+  background: rgba(238, 233, 242, 0.96);
   color: var(--ink);
   border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 999px;

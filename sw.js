@@ -5,7 +5,7 @@
 //   - Cache-first for static assets (icons, fairy GIF, fonts)
 // Cache name is versioned. Bump CACHE_VERSION when you change pre-cached assets.
 
-const CACHE_VERSION = 'v12';
+const CACHE_VERSION = 'v14';
 const CACHE = 'icania-' + CACHE_VERSION;
 
 const PRECACHE = [
