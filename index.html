@@ -214,41 +214,6 @@ a { color: var(--ink); text-decoration: none; }
 .nav.scrolled .nav-mark { font-size: 24px; }
 .nav.scrolled .nav-mark .nav-anim { height: 30px; }
 
-/* Desktop call-out nudging visitors toward "Sell" */
-.nav-sell { position: relative; }
-.nav-nudge {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  color: var(--accent);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.nav-nudge-arrow { display: block; }
-.nav-nudge-label {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 17px;
-  letter-spacing: 0;
-  text-transform: none;
-  line-height: 1;
-}
-@media (hover: hover) {
-  .nav-sell:hover .nav-nudge,
-  .nav-nudge:hover { color: #6E4FA3; }
-}
-.nav.scrolled .nav-nudge {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-6px);
-  pointer-events: none;
-}
-@media (max-width: 960px) { .nav-nudge { display: none; } }
 .nav-mark {
   font-family: var(--font-display);
   font-size: 28px;
@@ -1954,14 +1919,7 @@ if ('serviceWorker' in navigator) {
       <ul class="nav-links">
         <li><a href="/" data-nav="home">Home</a></li>
         <li><a href="/shop" data-nav="shop">Shop</a></li>
-        <li class="nav-sell"><a href="/sell" data-nav="sell">Sell</a>
-          <a class="nav-nudge" href="/sell" aria-label="Get in touch to sell with Icania">
-            <svg class="nav-nudge-arrow" viewBox="0 0 26 30" width="26" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M15 28 C 9 21, 9 13, 13 6"/>
-              <path d="M7 11 L13 4 L18 10"/>
-            </svg>
-            <span class="nav-nudge-label">Get in touch here!</span>
-          </a></li>
+        <li><a href="/sell" data-nav="sell">Sell</a></li>
         <li><a href="/how-it-works" data-nav="how-it-works">How it works</a></li>
         <li><a href="/reviews" data-nav="reviews">Reviews</a></li>
         <li><a href="/about" data-nav="about">About</a></li>
@@ -1988,7 +1946,7 @@ if ('serviceWorker' in navigator) {
         <div class="home-hero-side fade-up fade-up-3">
           <p class="home-hero-tagline">South West London Clothing Consignment.</p>
           <div class="hero-cta">
-            <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
+            <a class="btn btn-arrow" href="/sell">Get in touch &amp; sell with us</a>
             <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
           </div>
         </div>
@@ -2089,7 +2047,7 @@ if ('serviceWorker' in navigator) {
     <section class="cta-band">
       <div class="cta-band-inner">
         <p class="shop-coming-eyebrow shop-cta-line">Have pieces to sell?</p>
-        <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
+        <a class="btn btn-arrow" href="/sell">Get in touch &amp; sell with us</a>
       </div>
     </section>
 </section>
@@ -2367,7 +2325,7 @@ if ('serviceWorker' in navigator) {
     <section class="cta-band with-rule">
       <div class="cta-band-inner">
         <h2 class="display-m">Want in?</h2>
-        <a class="btn btn-arrow" href="/sell">Sell with Icania</a>
+        <a class="btn btn-arrow" href="/sell">Get in touch &amp; sell with us</a>
       </div>
     </section>
 </section>
@@ -3349,17 +3307,23 @@ function __observeReveals(scope) {
     return window.location.pathname.replace(/\/$/, '') === '/sell';
   }
 
+  // Land with the form's top just below the sticky nav, not hidden behind it
+  function scrollToForm(f) {
+    if (!f) return;
+    const y = window.pageYOffset + f.getBoundingClientRect().top - 96;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+
   cta.addEventListener('click', () => {
     if (onSell()) {
-      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToForm(form);
       return;
     }
     // SPA-navigate to /sell, then drop the visitor at the form
     history.pushState({}, '', '/sell');
     window.dispatchEvent(new PopStateEvent('popstate'));
     setTimeout(() => {
-      const f = document.querySelector('form[data-sell-form]');
-      if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToForm(document.querySelector('form[data-sell-form]'));
     }, 140);
   });
 
