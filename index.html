@@ -1828,12 +1828,14 @@ window.__loader = (function () {
   L.begin({ immediate: true });
   var gates = 1;
   function clear() { if (--gates <= 0) L.end(); }
-  // Hold briefly so most of the fairy animation plays on arrival, without
-  // delaying page access. The loader GIF runs 15 frames x 65ms; we cap the hold
-  // at 820ms so it never slows the page. Slower loads keep it up longer (gates
-  // below) and the GIF simply loops.
+  // Hold for one full play of the fairy so the whole animation is seen, calmly.
+  // The loader GIF runs 15 frames x 110ms = 1650ms and plays ONCE (loop=1), then
+  // rests on its last frame. On fast loads this is the floor; slower loads keep
+  // it up longer via the gates below while the fairy sits still (no frantic
+  // re-looping). Fade-out is 360ms, timed to land as the play completes.
+  var PLAY_MS = 1650;
   gates++;
-  setTimeout(clear, 820);
+  setTimeout(clear, PLAY_MS);
   if (document.fonts && document.fonts.ready) {
     gates++;
     document.fonts.ready.then(clear, clear);
