@@ -288,8 +288,8 @@ a { color: var(--ink); text-decoration: none; }
 
 .footer {
   border-top: 1px solid var(--accent-30);
-  padding: 96px 0 40px;
-  margin-top: 120px;
+  padding: 56px 0 32px;
+  margin-top: 80px;
 }
 .footer-grid {
   display: grid;
@@ -304,12 +304,12 @@ a { color: var(--ink); text-decoration: none; }
   font-size: 11px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  margin-bottom: 22px;
+  margin-bottom: 14px;
   font-weight: 400;
   color: var(--ink-65);
 }
 .footer ul { list-style: none; padding: 0; margin: 0; }
-.footer li { margin-bottom: 10px; }
+.footer li { margin-bottom: 7px; }
 .footer a {
   color: var(--ink);
   text-decoration: none;
@@ -321,10 +321,10 @@ a { color: var(--ink); text-decoration: none; }
 .footer a:hover { color: var(--accent); }
 .footer-mark {
   font-family: var(--font-display);
-  font-size: 44px;
+  font-size: 36px;
   font-weight: 400;
   letter-spacing: 0.005em;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -342,8 +342,8 @@ a { color: var(--ink); text-decoration: none; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 36px var(--gutter) 0;
-  margin-top: 64px;
+  padding: 24px var(--gutter) 0;
+  margin-top: 40px;
   border-top: var(--hair);
   max-width: var(--max);
   margin-left: auto;
@@ -1724,8 +1724,8 @@ main:focus { outline: none; }
   .home-hiw-more { text-align: right; padding-top: 12px; padding-bottom: 28px; }
   .product-grid { grid-template-columns: 1fr; }
   .review-grid, .seller-list { grid-template-columns: 1fr; }
-  .footer { margin-top: 24px; padding-top: 48px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .footer { margin-top: 24px; padding-top: 36px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 24px; }
   .footer-base { flex-direction: column; gap: 8px; align-items: flex-start; }
   .section { padding: 56px 0; }
   .section-lg { padding: 88px 0; }
@@ -2032,8 +2032,8 @@ if ('serviceWorker' in navigator) {
 
 <section data-view="shop" style="display:none;">
 <section class="page-header">
-      <h1 class="display-l fade-up fade-up-1 shop-title">Currently Vinted Only</h1>
-      <p class="body-l fade-up fade-up-2" style="max-width: 640px; margin-top: 24px;">I&rsquo;m building my own shop here, linked up to Vinted. Soon you&rsquo;ll browse and buy everything in one place, you&rsquo;ll still be buying from my Vinted, just from here. For now, shop on the Vinted app. Every sale is protected by Vinted&rsquo;s buyer protection.</p>
+      <h1 class="display-l fade-up fade-up-1 shop-title">We&rsquo;re currently only selling on Vinted</h1>
+      <p class="body-l fade-up fade-up-2" style="max-width: 640px; margin-top: 24px;">Currently building out this website and will soon be integrating the Vinted API which will mean it&rsquo;ll be possible to purchase from Icania directly through my website whilst maintaining Vinted&rsquo;s buyer protection, just without the noise of other Vinteders. For now just click the button below to see what&rsquo;s available from my shop.</p>
     </section>
 
     <section class="shop-coming">
@@ -2080,7 +2080,7 @@ if ('serviceWorker' in navigator) {
 
             <div class="form-field">
               <label class="form-label" for="name">Name<span class="req">Required</span></label>
-              <input class="form-input" id="name" name="name" type="text" required autocomplete="name" placeholder="First and last">
+              <input class="form-input" id="name" name="name" type="text" required autocomplete="name" placeholder="FIRST + LAST NAME">
             </div>
 
             <div class="form-field">
@@ -2091,7 +2091,7 @@ if ('serviceWorker' in navigator) {
 
             <div class="form-field">
               <label class="form-label" for="postcode">Postcode<span class="req">Required</span></label>
-              <input class="form-input" id="postcode" name="postcode" type="text" required autocomplete="postal-code" placeholder="SW13 9XX">
+              <input class="form-input" id="postcode" name="postcode" type="text" required autocomplete="postal-code" placeholder="SWXX XXX">
               <p class="form-help">South West London only at the moment. Full address taken on the call.</p>
             </div>
 
@@ -2101,7 +2101,7 @@ if ('serviceWorker' in navigator) {
                 <input class="chip-input-field" type="text" placeholder="Type a brand and press Enter">
               </div>
               <input type="hidden" name="brands">
-              <p class="form-help">List the main labels in your batch. Vintage and unbranded are fine. Type &ldquo;vintage&rdquo;.</p>
+              <p class="form-help">Vintage and unbranded are fine, just type for example &ldquo;vintage&rdquo; and press enter to add.</p>
             </div>
 
             <div class="form-field">
