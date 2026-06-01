@@ -187,6 +187,17 @@ a { color: var(--ink); text-decoration: none; }
   border-bottom: var(--hair-strong);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: background 0.35s ease, backdrop-filter 0.35s ease,
+              border-color 0.35s ease, box-shadow 0.35s ease;
+}
+/* iOS large-title -> compact: once scrolled past the hero, the bar shrinks
+   and its backdrop turns to translucent frosted glass. */
+.nav.scrolled {
+  background: rgba(244, 238, 247, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom-color: var(--accent-30);
+  box-shadow: 0 10px 30px -24px rgba(31, 37, 64, 0.5);
 }
 .nav-inner {
   display: flex;
@@ -195,7 +206,49 @@ a { color: var(--ink); text-decoration: none; }
   padding: 24px var(--gutter);
   max-width: var(--max);
   margin: 0 auto;
+  transition: padding 0.35s cubic-bezier(0.22, 1.0, 0.36, 1);
 }
+.nav.scrolled .nav-inner { padding-top: 13px; padding-bottom: 13px; }
+.nav-mark { transition: font-size 0.35s ease; }
+.nav-mark .nav-anim { transition: height 0.35s ease; }
+.nav.scrolled .nav-mark { font-size: 24px; }
+.nav.scrolled .nav-mark .nav-anim { height: 30px; }
+
+/* Desktop call-out nudging visitors toward "Sell" */
+.nav-sell { position: relative; }
+.nav-nudge {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.nav-nudge-arrow { display: block; }
+.nav-nudge-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1;
+}
+@media (hover: hover) {
+  .nav-sell:hover .nav-nudge,
+  .nav-nudge:hover { color: #6E4FA3; }
+}
+.nav.scrolled .nav-nudge {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-6px);
+  pointer-events: none;
+}
+@media (max-width: 960px) { .nav-nudge { display: none; } }
 .nav-mark {
   font-family: var(--font-display);
   font-size: 28px;
@@ -352,10 +405,11 @@ a { color: var(--ink); text-decoration: none; }
   color: var(--bg);
   border-radius: 4px;
   box-shadow: 0 8px 24px -16px rgba(31, 37, 64, 0.35);
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.12s ease;
   font-weight: 400;
 }
 .btn:hover { background: transparent; color: var(--ink); }
+.btn:active { transform: scale(0.97); }
 .btn[disabled], .btn[data-busy="true"] {
   opacity: 0.7;
   cursor: progress;
@@ -679,7 +733,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 30px; height: auto; margin: 0 18px; display: block; opacity: 0.85; }
+.section-mark img { width: 30px; height: auto; margin: 0 18px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -918,6 +972,7 @@ main:focus { outline: none; }
   transform: translateY(-2px);
   box-shadow: 0 20px 48px -18px rgba(0, 154, 168, 0.65);
 }
+.btn-vinted:active { transform: scale(0.97); }
 .btn-vinted::after {
   content: "\2192";
   font-size: 1em;
@@ -1591,12 +1646,13 @@ main:focus { outline: none; }
 .form-message.error { border-style: dashed; border-color: var(--ink); }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .fade-up { animation: fadeUp 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  /* Springy ease (slight overshoot) gives entries a tactile, settling feel */
+  .fade-up { animation: fadeUp 0.9s cubic-bezier(0.22, 1.0, 0.36, 1) both; }
   .fade-up-1 { animation-delay: 0.05s; }
   .fade-up-2 { animation-delay: 0.2s; }
   .fade-up-3 { animation-delay: 0.35s; }
@@ -1605,17 +1661,17 @@ main:focus { outline: none; }
   /* Scroll-triggered reveal for deeper-page elements */
   .scroll-reveal {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-                transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.75s cubic-bezier(0.22, 1.0, 0.36, 1),
+                transform 0.75s cubic-bezier(0.34, 1.4, 0.5, 1);
   }
-  .scroll-reveal.in-view { opacity: 1; transform: translateY(0); }
+  .scroll-reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
 
-  /* Light cross-fade between SPA views */
-  [data-view] { animation: viewIn 0.22s ease both; }
+  /* Smooth cross-fade between SPA views */
+  [data-view] { animation: viewIn 0.45s cubic-bezier(0.22, 1.0, 0.36, 1) both; }
   @keyframes viewIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
 
@@ -1904,7 +1960,14 @@ if ('serviceWorker' in navigator) {
       <ul class="nav-links">
         <li><a href="/" data-nav="home">Home</a></li>
         <li><a href="/shop" data-nav="shop">Shop</a></li>
-        <li><a href="/sell" data-nav="sell">Sell</a></li>
+        <li class="nav-sell"><a href="/sell" data-nav="sell">Sell</a>
+          <a class="nav-nudge" href="/sell" aria-label="Get in touch to sell with Icania">
+            <svg class="nav-nudge-arrow" viewBox="0 0 26 30" width="26" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 28 C 9 21, 9 13, 13 6"/>
+              <path d="M7 11 L13 4 L18 10"/>
+            </svg>
+            <span class="nav-nudge-label">Get in touch here!</span>
+          </a></li>
         <li><a href="/how-it-works" data-nav="how-it-works">How it works</a></li>
         <li><a href="/reviews" data-nav="reviews">Reviews</a></li>
         <li><a href="/about" data-nav="about">About</a></li>
@@ -3230,6 +3293,34 @@ function __observeReveals(scope) {
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update, { passive: true });
   update();
+})();
+
+/* ---------- Header compaction + gentle fairy parallax ---------- */
+(function () {
+  var nav = document.querySelector('.nav');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var marks = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.section-mark img'));
+  var ticking = false;
+
+  function frame() {
+    ticking = false;
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (nav) nav.classList.toggle('scrolled', y > 28);
+    if (marks.length) {
+      var vh = window.innerHeight;
+      for (var i = 0; i < marks.length; i++) {
+        var r = marks[i].getBoundingClientRect();
+        var drift = ((r.top + r.height / 2) - vh / 2) * -0.06;
+        marks[i].style.transform = 'translateY(' + drift.toFixed(1) + 'px)';
+      }
+    }
+  }
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(frame); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  frame();
 })();
 
 /* ---------- In-page smooth scroll for [data-scroll] anchors ---------- */
