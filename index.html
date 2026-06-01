@@ -70,6 +70,12 @@ html {
   color: var(--ink);
   font-size: 16px;
   line-height: 1.55;
+  /* Render type at the designed size on every browser. Without this, some
+     mobile browsers (e.g. DuckDuckGo, Safari auto-inflate, system Dynamic
+     Type) blow the whole type scale up ~30% and re-wrap every heading. */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -1855,7 +1861,7 @@ main:focus { outline: none; }
   .trust-stats { display: block; }
   .trust-item { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid var(--accent-30); }
   .trust-num { grid-column: 1; justify-self: center; align-self: center; padding: 8px 20px; font-size: clamp(30px, 8vw, 40px); }
-  .trust-item-label { grid-column: 2; max-width: none; font-size: 13px; text-align: left; white-space: nowrap; }
+  .trust-item-label { grid-column: 2; max-width: none; font-size: 13px; text-align: left; white-space: normal; }
   .trust-location-mark { display: inline-flex; }
   .trust-location {
     display: inline-flex;
@@ -1869,7 +1875,7 @@ main:focus { outline: none; }
   .trust-cta { padding-top: 32px; }
   .trust-cta .btn-arrow { width: 100%; text-align: center; }
   .home-hiw-head { padding-top: 40px; }
-  .btn.btn-arrow, .btn-vinted { font-size: 10px; letter-spacing: 0.16em; padding: 18px 28px; }
+  .btn.btn-arrow, .btn-vinted { font-size: 10px; letter-spacing: 0.16em; padding: 18px 28px; white-space: normal; text-align: center; }
   .about-hero { display: block; padding: 56px var(--gutter) 28px; position: relative; }
   .about-hero h1 { position: relative; z-index: 1; }
   .about-hero-mark { display: block; position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); margin-top: 0; width: clamp(96px, 28vw, 116px); height: auto; }
