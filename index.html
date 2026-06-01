@@ -289,7 +289,7 @@ a { color: var(--ink); text-decoration: none; }
 .footer {
   border-top: 1px solid var(--accent-30);
   padding: 56px 0 32px;
-  margin-top: 80px;
+  margin-top: 0;
 }
 .footer-grid {
   display: grid;
@@ -710,7 +710,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 76px; height: auto; margin: 0 24px; display: block; opacity: 0.85; will-change: transform; }
+.section-mark img { width: 150px; height: auto; margin: 0 28px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
   margin: 0;
   align-self: center;
@@ -1014,11 +1014,10 @@ main:focus { outline: none; }
   gap: 28px;
 }
 .trust-stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
   gap: 24px;
-  flex-wrap: nowrap;
 }
 .trust-item {
   display: flex;
@@ -1802,9 +1801,9 @@ main:focus { outline: none; }
   .trust-cta .btn-arrow { width: 100%; text-align: center; }
   .home-hiw-head { padding-top: 40px; }
   .btn.btn-arrow, .btn-vinted { font-size: 10px; letter-spacing: 0.16em; padding: 18px 28px; }
-  .about-hero { padding: 56px var(--gutter) 28px; display: flex; align-items: center; gap: 12px; }
-  .about-hero h1 { flex: 0 1 auto; min-width: 0; }
-  .about-hero-mark { display: block; flex: 0 0 auto; width: clamp(72px, 22vw, 116px); height: auto; align-self: center; }
+  .about-hero { padding: 56px var(--gutter) 28px; position: relative; }
+  .about-hero h1 { position: relative; z-index: 1; }
+  .about-hero-mark { display: block; position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); width: clamp(96px, 28vw, 116px); height: auto; }
   .about-body { padding: 30px var(--gutter) 24px; }
   [data-view="about"] .cta-band { padding: 32px 0; }
   .sell-hero { padding: 36px var(--gutter) 28px; }
@@ -2366,7 +2365,7 @@ if ('serviceWorker' in navigator) {
 <section data-view="about" style="display:none;">
 <section class="about-hero">
       <h1 class="display-xl fade-up fade-up-1">A small,<br>careful operation.</h1>
-      <img class="about-hero-mark fade-up fade-up-2" src="/fairy-mark.png" alt="">
+      <img class="about-hero-mark" src="/fairy-mark.png" alt="">
     </section>
 
     <section class="about-body">
