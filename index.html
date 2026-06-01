@@ -1378,7 +1378,7 @@ main:focus { outline: none; }
 .seller-stats b { color: var(--accent); font-weight: 600; letter-spacing: 0.06em; }
 
 .about-hero {
-  padding: 72px var(--gutter) 36px;
+  padding: 64px var(--gutter) 32px;
   max-width: var(--max);
   margin: 0 auto;
   display: flex;
@@ -1391,12 +1391,12 @@ main:focus { outline: none; }
   display: block;
   flex: 0 0 auto;
   width: auto;
-  height: 320px;
-  margin-top: -8px;
+  height: 300px;
+  margin-top: -48px;
 }
 .about-body {
   max-width: 760px;
-  padding: 40px var(--gutter) 80px;
+  padding: 28px var(--gutter) 80px;
   margin: 0 auto;
   border-top: var(--hair-strong);
 }
@@ -1407,6 +1407,38 @@ main:focus { outline: none; }
   margin-bottom: 1.5em;
   color: var(--ink-80);
   max-width: 65ch;
+}
+/* How-it-works hero: mobile/base keeps the original stacked header.
+   The fairy is desktop-only; the Reviews-matching flex layout lives in the
+   min-width block below so it can never leak into the mobile site. */
+.hiw-hero-mark { display: none; }
+.hiw-hero-sub { max-width: 640px; margin-top: 24px; }
+@media (min-width: 961px) {
+  .page-header.hiw-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 48px;
+    padding-top: 64px;
+    padding-bottom: 8px;
+  }
+  .hiw-hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+  .hiw-hero-text h1 { margin: 0; }
+  .hiw-hero-sub {
+    max-width: 600px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-65);
+    margin-top: 16px;
+    text-wrap: balance;
+  }
+  .hiw-hero-mark {
+    display: block;
+    flex: 0 0 auto;
+    width: auto;
+    height: 300px;
+    margin-top: -48px;
+  }
 }
 .faq-list {
   border-top: var(--hair-strong);
@@ -1735,6 +1767,7 @@ main:focus { outline: none; }
   .sell-aftermath-grid > div:first-child + div .next-step:first-child { padding-top: 4px; }
   .sell-aftermath { padding: 64px var(--gutter); }
   .about-hero { display: block; padding: 88px var(--gutter); }
+  .about-hero h1 { font-size: clamp(54px, 9vw, 200px); line-height: 0.98; letter-spacing: -0.012em; }
   .about-hero-mark { display: none; }
   .reviews-hero-mark { display: none; }
   .about-body { padding: 56px var(--gutter); }
@@ -2300,9 +2333,12 @@ if ('serviceWorker' in navigator) {
 </section>
 
 <section data-view="how-it-works" style="display:none;">
-<section class="page-header">
-      <h1 class="display-l fade-up fade-up-1">How it works.</h1>
-      <p class="body-l fade-up fade-up-2" style="max-width: 640px; margin-top: 24px;">From the first message to the final payment. No upfront cost, no contracts to sign, and no dealing with buyers.</p>
+<section class="page-header hiw-hero">
+      <div class="hiw-hero-text fade-up fade-up-1">
+        <h1 class="display-l">How it works.</h1>
+        <p class="body-l hiw-hero-sub">From the first message to the final payment. No upfront cost, no contracts to sign, and no dealing with buyers.</p>
+      </div>
+      <img class="hiw-hero-mark" src="/fairy-mark.png" alt="">
     </section>
 
     <section>
@@ -2413,7 +2449,7 @@ if ('serviceWorker' in navigator) {
 
 <section data-view="about" style="display:none;">
 <section class="about-hero">
-      <h1 class="display-xl fade-up fade-up-1">A small,<br>careful operation.</h1>
+      <h1 class="display-l fade-up fade-up-1">A small,<br>careful operation.</h1>
       <img class="about-hero-mark" src="/fairy-mark.png" alt="">
     </section>
 
