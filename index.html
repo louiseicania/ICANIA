@@ -1300,18 +1300,18 @@ main:focus { outline: none; }
 .review-tab.active .count { color: var(--ink-65); }
 
 .review-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--ink-12);
+  columns: 3;
+  column-gap: 24px;
 }
 .review-card {
   background: var(--bg);
-  padding: 40px 36px;
+  border: var(--hair);
+  padding: 28px 30px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  min-height: 260px;
+  gap: 18px;
+  break-inside: avoid;
+  margin-bottom: 24px;
 }
 .review-stars {
   letter-spacing: 0.08em;
@@ -1323,7 +1323,6 @@ main:focus { outline: none; }
   font-family: var(--font-display);
   font-size: 19px;
   line-height: 1.45;
-  flex: 1;
   font-weight: 400;
   letter-spacing: -0.005em;
 }
@@ -1338,10 +1337,8 @@ main:focus { outline: none; }
 }
 
 .seller-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--ink-12);
+  columns: 3;
+  column-gap: 24px;
 }
 .seller-stats {
   display: flex;
@@ -1656,7 +1653,7 @@ main:focus { outline: none; }
   .step-cell:nth-child(2) { border-right: 0; }
   .step-cell:nth-child(1), .step-cell:nth-child(2) { border-bottom: var(--hair); }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
-  .review-grid, .seller-list { grid-template-columns: repeat(2, 1fr); }
+  .review-grid, .seller-list { columns: 2; }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
   .home-hero-headline { max-width: none; text-align: left; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); }
@@ -1734,7 +1731,7 @@ main:focus { outline: none; }
   .step-cell:last-child { border-bottom: 0; }
   .home-hiw-more { text-align: right; padding-top: 12px; padding-bottom: 28px; }
   .product-grid { grid-template-columns: 1fr; }
-  .review-grid, .seller-list { grid-template-columns: 1fr; }
+  .review-grid, .seller-list { columns: 1; }
   .footer { margin-top: 24px; padding-top: 36px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 24px; }
   .footer-base { flex-direction: column; gap: 8px; align-items: flex-start; }
@@ -2310,11 +2307,11 @@ if ('serviceWorker' in navigator) {
     </section>
 
     <section class="cta-band with-rule">
-      <div class="cta-band-inner">
+      <div class="cta-band-inner cta-stack">
         <h2 class="display-m">Add yours.</h2>
-        <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
-          <a class="btn-text" href="/shop">Buy something</a>
-          <a class="btn btn-arrow" href="/sell">Sell with us</a>
+        <div class="hero-cta">
+          <a class="btn btn-arrow" href="/sell">Get in touch &amp; sell with us</a>
+          <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
         </div>
       </div>
     </section>
