@@ -2,146 +2,120 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>OG card</title>
+<title>Icania — share card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  html,body{margin:0;background:#888;}
-  #card{display:block;}
+  html,body{margin:0;background:#0c0c0c;display:flex;justify-content:center;align-items:center;min-height:100vh;}
+  #card{display:block;width:1000px;height:525px;box-shadow:0 20px 80px rgba(0,0,0,0.5);}
 </style>
 </head>
 <body>
-<canvas id="card" width="1200" height="630"></canvas>
+<canvas id="card"></canvas>
 <script>
 const BLUSH = '#F6E9EE';
 const NAVY  = '#1F2540';
-const INK45 = 'rgba(31,37,64,0.55)';
+const MUTED = 'rgba(31,37,64,0.58)';
 
+// ---- HD canvas: logical 1200x630, backing store scaled up ----
+const W = 1200, H = 630, SCALE = 2;
 const c = document.getElementById('card');
 const x = c.getContext('2d');
+c.width = W * SCALE;
+c.height = H * SCALE;
+x.scale(SCALE, SCALE);
+x.imageSmoothingEnabled = true;
+x.imageSmoothingQuality = 'high';
 
 const fairy = new Image();
 let fairyReady = false;
 fairy.onload = () => { fairyReady = true; render(); };
 fairy.src = '/fairy-mark.png';
 
-function roundRectStroke(ctx, rx, ry, w, h, r){
-  ctx.beginPath();
-  ctx.moveTo(rx + r, ry);
-  ctx.arcTo(rx + w, ry, rx + w, ry + h, r);
-  ctx.arcTo(rx + w, ry + h, rx, ry + h, r);
-  ctx.arcTo(rx, ry + h, rx, ry, r);
-  ctx.arcTo(rx, ry, rx + w, ry, r);
-  ctx.closePath();
-  ctx.stroke();
-}
+// ---- layout constants (logical 1200x630) ----
+// Fairy: flying, left, top wing cropped by the top edge.
+const FAIRY = { h: 715, x: 66, y: -34 };
 
-// One stat pill: outlined capsule with a big number, caption beneath.
-function pill(cx, topY, number, caption){
-  const w = 184, h = 96, r = 48;
-  x.strokeStyle = 'rgba(31,37,64,0.22)';
-  x.lineWidth = 1.4;
-  roundRectStroke(x, cx - w/2, topY, w, h, r);
+// Wordmark block, centred on WM_X, sitting right of the fairy.
+const WM_X    = 583;
+const WM_BASE = 392;   // "Icania." baseline
+const WM_SIZE = 52;
+const WM_RULE = 408;   // underline y
+const SUB_BASE = 438;  // subline baseline
+const SUB_SIZE = 30;
 
-  x.fillStyle = NAVY;
-  x.textAlign = 'center';
-  x.textBaseline = 'middle';
-  x.font = '500 54px "Cormorant Garamond"';
-  x.fillText(number, cx, topY + h/2 + 4);
+// Process poem, upper right, alternating left / indented stagger.
+const POEM_L = 737, POEM_R = 838, POEM_SIZE = 36;
+const POEM = [
+  ['I collect.',    POEM_L, 172],
+  ['I photograph.', POEM_R, 210],
+  ['I publish.',    POEM_L, 248],
+  ['Clothes sell.', POEM_R, 286],
+  ['I ship.',       POEM_L, 326],
+  ['We split.',     POEM_R, 364],
+];
 
-  x.fillStyle = INK45;
-  x.textBaseline = 'alphabetic';
-  x.font = "300 17px 'Helvetica Neue', Helvetica, Arial, sans-serif";
-  x.fillText(caption, cx, topY + h + 30);
-}
+// Two footer columns, left aligned.
+const FOOT_SIZE = 19, FOOT_Y1 = 561, FOOT_Y2 = 593;
+const SOC_X = 259, REV_X = 606;
 
 function render(){
-  // blush field
   x.fillStyle = BLUSH;
-  x.fillRect(0, 0, 1200, 630);
+  x.fillRect(0, 0, W, H);
 
-  // oversized fairy watermark, flipped, bleeding off the right edge
+  // fairy, natural navy line art
   if (fairyReady){
-    const wh = 780;
-    const ww = wh * (fairy.width / fairy.height);
-    const wx = 1004;
-    const wy = (630 - wh) / 2;
-    x.save();
-    x.globalAlpha = 0.05;
-    x.translate(wx + ww, wy);
-    x.scale(-1, 1);
-    x.drawImage(fairy, 0, 0, ww, wh);
-    x.restore();
+    const fw = FAIRY.h * (fairy.width / fairy.height);
+    x.drawImage(fairy, FAIRY.x, FAIRY.y, fw, FAIRY.h);
   }
 
-  // inset hairline frame
-  x.strokeStyle = 'rgba(31,37,64,0.26)';
-  x.lineWidth = 1.5;
-  x.strokeRect(34, 34, 1200 - 68, 630 - 68);
-
-  // fairy, natural navy line art, left column
-  if (fairyReady){
-    const fh = 452;
-    const fw = fh * (fairy.width / fairy.height);
-    const fx = 76;
-    const fy = (630 - fh) / 2;
-    x.drawImage(fairy, fx, fy, fw, fh);
-  }
-
-  // central text column
-  const RX = 678;
-
-  // wordmark with trailing period
   x.fillStyle = NAVY;
-  x.textAlign = 'center';
-  x.textBaseline = 'alphabetic';
-  x.font = '500 112px "Cormorant Garamond"';
-  x.fillText('Icania.', RX, 222);
 
-  // underline rule beneath the wordmark
+  // ---- process poem ----
+  x.textAlign = 'left';
+  x.textBaseline = 'alphabetic';
+  x.font = '400 ' + POEM_SIZE + 'px "Cormorant Garamond"';
+  for (const [line, lx, ly] of POEM) x.fillText(line, lx, ly);
+
+  // ---- wordmark + underline + subline ----
+  x.textAlign = 'center';
+  x.font = '500 ' + WM_SIZE + 'px "Cormorant Garamond"';
+  x.fillText('Icania.', WM_X, WM_BASE);
   const wmW = x.measureText('Icania.').width;
   x.strokeStyle = NAVY;
-  x.lineWidth = 2.5;
+  x.lineWidth = 1.6;
   x.beginPath();
-  x.moveTo(RX - wmW/2, 250);
-  x.lineTo(RX + wmW/2, 250);
+  x.moveTo(WM_X - wmW / 2, WM_RULE);
+  x.lineTo(WM_X + wmW / 2, WM_RULE);
   x.stroke();
 
-  // italic subline
-  x.fillStyle = NAVY;
-  x.font = 'italic 400 58px "Cormorant Garamond"';
-  x.fillText('Vinted Reselling Service', RX, 334);
+  x.font = 'italic 400 ' + SUB_SIZE + 'px "Cormorant Garamond"';
+  x.fillText('Vinted Reselling Service', WM_X, SUB_BASE);
 
-  // three stat pills, evenly spaced along the bottom
-  const pillsTop = 402;
-  const gap = 286;
-  pill(RX - gap, pillsTop, '3',     'month selling period');
-  pill(RX,       pillsTop, '50/50', 'split with sellers');
-  pill(RX + gap, pillsTop, '651',   'five star reviews on vinted');
-
-  // small hairline tick + small-caps domain footer
-  x.strokeStyle = 'rgba(31,37,64,0.3)';
-  x.lineWidth = 1.4;
-  x.beginPath();
-  x.moveTo(RX - 26, 556);
-  x.lineTo(RX + 26, 556);
-  x.stroke();
-
-  x.fillStyle = INK45;
+  // ---- footer: socials (left col) + reviews (mid col) ----
+  x.fillStyle = MUTED;
   x.textAlign = 'center';
-  x.textBaseline = 'alphabetic';
-  x.font = "400 18px 'Helvetica Neue', Helvetica, Arial, sans-serif";
-  x.letterSpacing = '6px';
-  x.fillText('ICANIA.CO.UK', RX + 3, 586);
-  x.letterSpacing = '0px';
+  x.font = '400 ' + FOOT_SIZE + 'px "Cormorant Garamond"';
+  x.fillText('@__icaniaa__ on Instagram  ·  @_icaniaa_ on TikTok  ·  650+ 5 star Vinted reviews', 852, 595);
 
   window.__done = true;
 }
 
 window.redraw = render;
 window.exportCard = (type) => c.toDataURL(type || 'image/png');
-document.fonts.ready.then(render);
+
+(async () => {
+  try {
+    await Promise.all([
+      document.fonts.load('500 52px "Cormorant Garamond"'),
+      document.fonts.load('400 42px "Cormorant Garamond"'),
+      document.fonts.load('italic 400 30px "Cormorant Garamond"'),
+    ]);
+    await document.fonts.ready;
+  } catch (e) {}
+  render();
+})();
 render();
 </script>
 </body>
