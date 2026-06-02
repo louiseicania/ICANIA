@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shop preview · Icania</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F2540">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32-v2.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .sp-flag {
+      background: var(--ink); color: var(--bg);
+      font-family: var(--font); font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; text-align: center;
+      padding: 8px 16px; font-weight: 500;
+    }
+    .sp-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+    .sp-head { text-align: center; padding: 64px 0 28px; }
+    .sp-title {
+      font-family: var(--font-display); font-weight: 300;
+      font-size: clamp(48px, 8vw, 120px); line-height: 0.95;
+      letter-spacing: -0.5px; margin: 0;
+    }
+    .sp-sub {
+      font-family: var(--font); font-size: 15px; color: var(--ink-65);
+      max-width: 540px; margin: 18px auto 0; line-height: 1.6;
+    }
+    .sp-filters {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      padding: 8px 0 4px; border-bottom: var(--hair);
+    }
+    .sp-filter {
+      font-family: var(--font); font-size: 12px; letter-spacing: 1px;
+      text-transform: uppercase; background: none; border: 1px solid var(--ink-25);
+      color: var(--ink-65); padding: 9px 18px; border-radius: 999px;
+      cursor: pointer; transition: all .2s ease;
+    }
+    .sp-filter:hover { border-color: var(--ink); color: var(--ink); }
+    .sp-filter.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+    .sp-count {
+      text-align: center; font-family: var(--font); font-size: 12px;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--ink-45);
+      padding: 22px 0 0;
+    }
+    .sp-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 40px 28px; padding: 32px 0 96px;
+    }
+    .sp-card { cursor: pointer; display: block; text-align: left; background: none; border: 0; padding: 0; font: inherit; color: inherit; }
+    .sp-card-img {
+      position: relative; width: 100%; aspect-ratio: 3 / 4;
+      background: #ece0e6 center/cover no-repeat; overflow: hidden;
+    }
+    .sp-card-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .sp-card:hover .sp-card-img img { transform: scale(1.04); }
+    .sp-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--bg); color: var(--ink); font-family: var(--font);
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 10px;
+    }
+    .sp-meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    .sp-brand { font-family: var(--font); font-size: 13px; letter-spacing: .3px; font-weight: 500; }
+    .sp-price { font-family: var(--font-num); font-size: 19px; }
+    .sp-desc { font-family: var(--font); font-size: 13px; color: var(--ink-65); margin-top: 3px; line-height: 1.45; }
+    .sp-size { font-family: var(--font); font-size: 12px; color: var(--ink-45); margin-top: 4px; letter-spacing: .5px; }
+    .sp-empty { grid-column: 1 / -1; text-align: center; padding: 80px 0; color: var(--ink-45); font-family: var(--font); }
+
+    /* Product detail overlay */
+    .sp-detail {
+      position: fixed; inset: 0; z-index: 200; background: var(--bg);
+      overflow-y: auto; display: none;
+    }
+    .sp-detail.open { display: block; }
+    .sp-detail-bar {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px var(--gutter); border-bottom: var(--hair);
+      position: sticky; top: 0; background: var(--bg); z-index: 2;
+    }
+    .sp-back {
+      font-family: var(--font); font-size: 13px; letter-spacing: .5px;
+      background: none; border: 0; cursor: pointer; color: var(--ink);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .sp-back span { font-size: 18px; line-height: 1; }
+    .sp-detail-inner {
+      max-width: 1200px; margin: 0 auto; padding: 40px var(--gutter) 96px;
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: start;
+    }
+    .sp-gallery-main {
+      width: 100%; aspect-ratio: 3 / 4; background: #ece0e6 center/cover no-repeat;
+      overflow: hidden;
+    }
+    .sp-gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sp-thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .sp-thumb {
+      width: 64px; height: 84px; object-fit: cover; cursor: pointer;
+      border: 1px solid transparent; opacity: .65; transition: all .2s ease;
+    }
+    .sp-thumb:hover { opacity: 1; }
+    .sp-thumb.active { opacity: 1; border-color: var(--ink); }
+    .sp-info { position: sticky; top: 100px; }
+    .sp-info-brand { font-family: var(--font); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-65); }
+    .sp-info-title { font-family: var(--font-display); font-weight: 300; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; margin: 10px 0 0; }
+    .sp-info-price { font-family: var(--font-num); font-size: 32px; margin: 22px 0 0; }
+    .sp-info-rows { margin: 28px 0 0; border-top: var(--hair); }
+    .sp-info-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: var(--hair); font-family: var(--font); font-size: 14px; }
+    .sp-info-row span:first-child { color: var(--ink-45); letter-spacing: .5px; }
+    .sp-buy {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 30px; padding: 18px 24px;
+      background: var(--ink); color: var(--bg); text-decoration: none;
+      font-family: var(--font); font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+      transition: opacity .2s ease;
+    }
+    .sp-buy:hover { opacity: .85; }
+    .sp-buy.reserved { background: var(--ink-25); pointer-events: none; }
+    .sp-buy-note { font-family: var(--font); font-size: 12px; color: var(--ink-45); text-align: center; margin-top: 14px; line-height: 1.5; }
+
+    @media (max-width: 900px) {
+      .sp-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+      .sp-detail-inner { grid-template-columns: 1fr; gap: 28px; padding-bottom: 64px; }
+      .sp-info { position: static; }
+      .sp-head { padding: 40px 0 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="sp-flag">Shop preview · sample stock shown for layout only</div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-mark" href="/"><img class="nav-anim" src="/fairy_stopmotion.gif" alt="" aria-hidden="true" width="200" height="200">Icania</a>
+    <nav>
+      <button class="nav-toggle" aria-expanded="false">Menu</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/shopprep" aria-current="page">Shop</a></li>
+        <li><a href="/sell">Sell</a></li>
+        <li><a href="/how-it-works">How it works</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="sp-wrap">
+    <div class="sp-head">
+      <h1 class="sp-title">The Shop</h1>
+      <p class="sp-sub">Curated pre loved pieces, ready to wear. Browse here, buy securely on Vinted with full buyer protection.</p>
+    </div>
+    <div class="sp-filters" id="sp-filters"></div>
+    <p class="sp-count" id="sp-count"></p>
+    <div class="sp-grid" id="sp-grid"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-group footer-group-a">
+      <div class="footer-brand">
+        <div class="footer-mark"><span class="spark" aria-hidden="true"><img src="/fairy-mark.png" alt=""></span>Icania</div>
+        <p class="footer-tag">South West London womenswear consignment.<br>We do the work.<br>You keep half.</p>
+      </div>
+      <div class="footer-col footer-col-service">
+        <h4>Service</h4>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="mailto:louise@icania.co.uk">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-group footer-group-b">
+      <div class="footer-col footer-col-browse">
+        <h4>Browse</h4>
+        <ul>
+          <li><a href="/shopprep">Shop</a></li>
+          <li><a href="/sell">Sell</a></li>
+          <li><a href="/how-it-works">How it works</a></li>
+          <li><a href="/reviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-legal">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>© 2026 Icania</span>
+    <span>South West London, UK</span>
+  </div>
+</footer>
+
+<div class="sp-detail" id="sp-detail" aria-hidden="true">
+  <div class="sp-detail-bar">
+    <button class="sp-back" id="sp-back" type="button"><span>&larr;</span> Back to shop</button>
+  </div>
+  <div class="sp-detail-inner" id="sp-detail-inner"></div>
+</div>
+
+<script>
+(function () {
+  var grid = document.getElementById('sp-grid');
+  var countEl = document.getElementById('sp-count');
+  var filtersEl = document.getElementById('sp-filters');
+  var detail = document.getElementById('sp-detail');
+  var detailInner = document.getElementById('sp-detail-inner');
+  var PRODUCTS = [];
+  var activeCat = 'all';
+  var CATS = ['all'];
+  var byId = {};
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  }); }
+
+  function renderFilters() {
+    filtersEl.innerHTML = CATS.map(function (c) {
+      var label = c === 'all' ? 'All' : c.charAt(0).toUpperCase() + c.slice(1);
+      return '<button class="sp-filter' + (c === activeCat ? ' active' : '') + '" data-cat="' + c + '">' + label + '</button>';
+    }).join('');
+  }
+
+  function renderGrid() {
+    var visible = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(function (p) { return p.category === activeCat; });
+    countEl.textContent = visible.length + (visible.length === 1 ? ' piece' : ' pieces');
+    if (!visible.length) { grid.innerHTML = '<div class="sp-empty">No pieces in this category right now.</div>'; return; }
+    grid.innerHTML = visible.map(function (p) {
+      return '<button class="sp-card" data-id="' + p.id + '">' +
+        '<div class="sp-card-img">' +
+          (p.reserved ? '<span class="sp-tag">Reserved</span>' : '') +
+          '<img loading="lazy" src="' + esc(p.photos[0]) + '" alt="' + esc(p.brand + ' ' + p.title) + '"></div>' +
+        '<div class="sp-meta"><span class="sp-brand">' + esc(p.brand) + '</span><span class="sp-price">&pound;' + p.price + '</span></div>' +
+        '<div class="sp-desc">' + esc(p.title) + '</div>' +
+        '<div class="sp-size">Size ' + esc(p.size) + ' &middot; ' + esc(p.condition) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+
+  function openDetail(id, push) {
+    var p = byId[id];
+    if (!p) return;
+    var thumbs = p.photos.map(function (src, i) {
+      return '<img class="sp-thumb' + (i === 0 ? ' active' : '') + '" data-src="' + esc(src) + '" src="' + esc(src) + '" alt="">';
+    }).join('');
+    detailInner.innerHTML =
+      '<div class="sp-gallery">' +
+        '<div class="sp-gallery-main"><img id="sp-main-img" src="' + esc(p.photos[0]) + '" alt="' + esc(p.brand + ' ' + p.title) + '"></div>' +
+        (p.photos.length > 1 ? '<div class="sp-thumbs">' + thumbs + '</div>' : '') +
+      '</div>' +
+      '<div class="sp-info">' +
+        '<div class="sp-info-brand">' + esc(p.brand) + '</div>' +
+        '<h2 class="sp-info-title">' + esc(p.title) + '</h2>' +
+        '<div class="sp-info-price">&pound;' + p.price + '</div>' +
+        '<div class="sp-info-rows">' +
+          '<div class="sp-info-row"><span>Size</span><span>' + esc(p.size) + '</span></div>' +
+          '<div class="sp-info-row"><span>Condition</span><span>' + esc(p.condition) + '</span></div>' +
+          '<div class="sp-info-row"><span>Brand</span><span>' + esc(p.brand) + '</span></div>' +
+        '</div>' +
+        (p.reserved
+          ? '<span class="sp-buy reserved">Reserved</span>'
+          : '<a class="sp-buy" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buy on Vinted</a>') +
+        '<p class="sp-buy-note">Payment and delivery are handled by Vinted, with full buyer protection. You will be taken to the listing to complete your purchase.</p>' +
+      '</div>';
+    detail.classList.add('open');
+    detail.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    if (push) history.pushState({ item: id }, '', '/shopprep?item=' + id);
+  }
+
+  function closeDetail(pop) {
+    detail.classList.remove('open');
+    detail.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (!pop) history.pushState({}, '', '/shopprep');
+  }
+
+  filtersEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.sp-filter'); if (!b) return;
+    activeCat = b.dataset.cat; renderFilters(); renderGrid();
+  });
+  grid.addEventListener('click', function (e) {
+    var c = e.target.closest('.sp-card'); if (!c) return;
+    openDetail(c.dataset.id, true);
+  });
+  detailInner.addEventListener('click', function (e) {
+    var t = e.target.closest('.sp-thumb'); if (!t) return;
+    document.getElementById('sp-main-img').src = t.dataset.src;
+    detailInner.querySelectorAll('.sp-thumb').forEach(function (x) { x.classList.remove('active'); });
+    t.classList.add('active');
+  });
+  document.getElementById('sp-back').addEventListener('click', function () { closeDetail(false); });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && detail.classList.contains('open')) closeDetail(false); });
+  window.addEventListener('popstate', function () {
+    var m = location.search.match(/item=(\d+)/);
+    if (m && byId[m[1]]) openDetail(m[1], false); else closeDetail(true);
+  });
+
+  fetch('/shop-data.json').then(function (r) { return r.json(); }).then(function (data) {
+    PRODUCTS = data;
+    PRODUCTS.forEach(function (p) { byId[p.id] = p; });
+    var set = {};
+    PRODUCTS.forEach(function (p) { set[p.category] = true; });
+    CATS = ['all'].concat(Object.keys(set).sort());
+    renderFilters(); renderGrid();
+    var m = location.search.match(/item=(\d+)/);
+    if (m && byId[m[1]]) openDetail(m[1], false);
+  }).catch(function () {
+    grid.innerHTML = '<div class="sp-empty">Shop is loading. Please refresh in a moment.</div>';
+  });
+})();
+</script>
+</body>
+</html>
