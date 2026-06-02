@@ -1,0 +1,41 @@
+name: Sync shop from Vinted
+
+# Mirrors Louise's public Vinted closet into shop-data.json once a day.
+# 16:00 UTC = 5pm UK during British Summer Time (it shifts to 4pm UK in winter,
+# because GitHub schedules run on UTC and do not follow daylight saving).
+on:
+  schedule:
+    - cron: '0 16 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shop-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch closet
+        run: node fetch-shop.js
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- shop-data.json; then
+            echo "No shop changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add shop-data.json
+          git commit -m "Sync shop from Vinted closet"
+          git push
