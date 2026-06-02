@@ -37,12 +37,11 @@ fairy.src = '/fairy-mark.png';
 // Fairy: flying, left, top wing cropped by the top edge.
 const FAIRY = { h: 715, x: 66, y: -34 };
 
-// Wordmark block, centred on WM_X, sitting right of the fairy.
-const WM_X    = 583;
-const WM_BASE = 392;   // "Icania." baseline
+// Wordmark block: WM_X is computed at render time to sit centred under the poem column.
+const WM_BASE = 466;   // "Icania." baseline
 const WM_SIZE = 52;
-const WM_RULE = 408;   // underline y
-const SUB_BASE = 438;  // subline baseline
+const WM_RULE = 482;   // underline y
+const SUB_BASE = 512;  // subline baseline
 const SUB_SIZE = 30;
 
 // Process poem, upper right, alternating left / indented stagger.
@@ -76,7 +75,13 @@ function render(){
   x.textAlign = 'left';
   x.textBaseline = 'alphabetic';
   x.font = '400 ' + POEM_SIZE + 'px "Cormorant Garamond"';
-  for (const [line, lx, ly] of POEM) x.fillText(line, lx, ly);
+  let poemLeft = Infinity, poemRight = -Infinity;
+  for (const [line, lx, ly] of POEM) {
+    x.fillText(line, lx, ly);
+    poemLeft = Math.min(poemLeft, lx);
+    poemRight = Math.max(poemRight, lx + x.measureText(line).width);
+  }
+  const WM_X = (poemLeft + poemRight) / 2;
 
   // ---- wordmark + underline + subline ----
   x.textAlign = 'center';
