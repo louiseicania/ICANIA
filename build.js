@@ -24,7 +24,7 @@ const path = require('path');
 
 const ROOT = __dirname;
 const SITE = 'https://icania.co.uk';
-const ROUTES = ['how-it-works', 'sell', 'about', 'faq'];
+const ROUTES = ['how-it-works', 'sell', 'about', 'faq', 'shop', 'reviews', 'privacy', 'terms'];
 
 const shell = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const appjs = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
