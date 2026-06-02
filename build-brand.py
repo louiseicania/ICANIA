@@ -6,7 +6,7 @@ from PIL import Image, ImageSequence
 
 SRC = "fairy_stopmotion.gif"
 TEMPLATE = "brand.template.html"
-OUT = "brand/index.html"
+OUT = "brand.html"
 DISPLAY_W = 200  # 2x of the ~88px display cell, for crispness
 
 
