@@ -114,6 +114,14 @@ a { color: var(--ink); text-decoration: none; }
   line-height: 1.3;
   letter-spacing: 0;
 }
+.home-mission .display-s {
+  font-size: clamp(20px, 2.3vw, 31px);
+}
+.home-mission-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 var(--gutter-cta);
+}
 
 .eyebrow {
   font-family: var(--font);
@@ -1828,6 +1836,7 @@ main:focus { outline: none; }
 
 @media (max-width: 640px) {
   :root { --gutter: 24px; }
+  .home-mission-inner { padding: 0 var(--gutter); }
   .mob-break { display: inline; }
   .section-mark { display: none; }
   .three-step { grid-template-columns: 1fr; border-bottom: 0; }
