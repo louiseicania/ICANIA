@@ -650,10 +650,10 @@ function __observeReveals(scope) {
   const DEFAULT_DESC = 'Sell your wardrobe without the hassle. Icania is a South West London womenswear consignment service. We photograph, list, and sell your clothes on Vinted and split the proceeds 50/50.';
   const META = {
     home: { title: 'Icania · South West London womenswear consignment', desc: DEFAULT_DESC },
-    shop: { title: 'Shop · Icania', desc: 'Browse pieces from Icania. Currently selling on Vinted with 651 reviews averaging 4.9 stars.' },
+    shop: { title: 'Shop · Icania', desc: 'Browse pieces from Icania. Currently selling on Vinted with 650+ five star reviews.' },
     sell: { title: 'Sell your wardrobe · Icania', desc: 'Tell us what you’d like to consign. We’ll be in touch within 24 hours to confirm what we can take and arrange collection.' },
     'how-it-works': { title: 'Vinted reselling service · we sell your clothes for you · Icania', desc: 'Icania is a South West London Vinted reselling service. We list and sell your clothes on Vinted for you and split the proceeds 50/50. No upfront cost, no contracts, no dealing with buyers.' },
-    reviews: { title: 'Reviews · Icania', desc: '651 buyer reviews on Vinted averaging 4.9 stars, plus stories from sellers across South West London.' },
+    reviews: { title: 'Reviews · Icania', desc: '651 five star buyer reviews on Vinted, plus stories from sellers across South West London.' },
     about: { title: 'About · Icania', desc: 'A small, careful South West London consignment service. We do the work, you keep half.' },
     faq: { title: 'FAQ · Icania', desc: 'Brands we accept, how long pieces take to sell, the 50/50 split, payment, and more.' },
     privacy: { title: 'Privacy policy · Icania', desc: 'What personal information Icania collects, why, how we look after it, and your rights.' },
