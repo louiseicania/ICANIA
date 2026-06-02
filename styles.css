@@ -50,7 +50,6 @@ html {
   text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -704,7 +703,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   height: 1px;
   background: var(--accent-30);
 }
-.section-mark img { width: 220px; height: auto; margin: 0 36px; display: block; opacity: 0.85; will-change: transform; }
+.section-mark img { width: 220px; height: auto; margin: 0 36px; display: block; opacity: 0.85; }
 .home-hero-headline {
   margin: clamp(60px, 9vh, 120px) auto clamp(24px, 4vh, 56px);
   text-align: center;

@@ -746,7 +746,9 @@ function __observeReveals(scope) {
 (function () {
   var nav = document.querySelector('.nav');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var marks = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.section-mark img'));
+  var marks = reduce ? [] : Array.prototype.slice
+    .call(document.querySelectorAll('.section-mark img'))
+    .filter(function (m) { return m.offsetParent !== null; });
   var ticking = false;
   function frame() {
     ticking = false;
