@@ -1932,6 +1932,7 @@ main:focus { outline: none; }
   .shop-coming-inner { gap: 16px; padding-bottom: 4px; }
   [data-view="shop"] .cta-band { padding: 12px 0 40px; }
   [data-view="shop"] .cta-band-inner { gap: 14px; }
+  [data-view="shop"] .cta-band .btn.btn-arrow { white-space: nowrap; }
   .numbered-row { padding: 40px var(--gutter); gap: 12px; }
   [data-view="reviews"] .page-header { padding: 24px var(--gutter) 16px; }
   [data-view="reviews"] .page-header .display-l { font-size: clamp(30px, 8.6vw, 44px); white-space: nowrap; line-height: 1.05; }
