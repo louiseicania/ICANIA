@@ -264,6 +264,7 @@ a { color: var(--ink); text-decoration: none; }
   padding: 0 var(--gutter);
   max-width: var(--max);
   margin: 0 auto;
+  align-items: end;
 }
 .footer h4 {
   font-family: var(--font);
@@ -335,9 +336,9 @@ a { color: var(--ink); text-decoration: none; }
 
 .footer-group { display: contents; }
 .footer-brand { order: 0; }
-.footer-col-browse { order: 1; padding-top: 48px; }
-.footer-col-service { order: 2; padding-top: 48px; }
-.footer-col-legal { order: 3; align-self: end; }
+.footer-col-browse { order: 1; }
+.footer-col-service { order: 2; }
+.footer-col-legal { order: 3; }
 
 /* ---------- Buttons ---------- */
 
