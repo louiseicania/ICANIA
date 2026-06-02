@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#888;}
+  #card{display:block;}
+</style>
+</head>
+<body>
+<canvas id="card" width="1200" height="630"></canvas>
+<script>
+const BLUSH = '#F6E9EE';
+const NAVY  = '#1F2540';
+const INK45 = 'rgba(31,37,64,0.55)';
+
+const c = document.getElementById('card');
+const x = c.getContext('2d');
+
+const fairy = new Image();
+let fairyReady = false;
+fairy.onload = () => { fairyReady = true; render(); };
+fairy.src = '/fairy-mark.png';
+
+function roundRectStroke(ctx, rx, ry, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(rx + r, ry);
+  ctx.arcTo(rx + w, ry, rx + w, ry + h, r);
+  ctx.arcTo(rx + w, ry + h, rx, ry + h, r);
+  ctx.arcTo(rx, ry + h, rx, ry, r);
+  ctx.arcTo(rx, ry, rx + w, ry, r);
+  ctx.closePath();
+  ctx.stroke();
+}
+
+// One stat pill: outlined capsule with a big number, caption beneath.
+function pill(cx, topY, number, caption){
+  const w = 184, h = 96, r = 48;
+  x.strokeStyle = 'rgba(31,37,64,0.22)';
+  x.lineWidth = 1.4;
+  roundRectStroke(x, cx - w/2, topY, w, h, r);
+
+  x.fillStyle = NAVY;
+  x.textAlign = 'center';
+  x.textBaseline = 'middle';
+  x.font = '500 54px "Cormorant Garamond"';
+  x.fillText(number, cx, topY + h/2 + 4);
+
+  x.fillStyle = INK45;
+  x.textBaseline = 'alphabetic';
+  x.font = "300 17px 'Helvetica Neue', Helvetica, Arial, sans-serif";
+  x.fillText(caption, cx, topY + h + 30);
+}
+
+function render(){
+  // blush field
+  x.fillStyle = BLUSH;
+  x.fillRect(0, 0, 1200, 630);
+
+  // oversized fairy watermark, flipped, bleeding off the right edge
+  if (fairyReady){
+    const wh = 780;
+    const ww = wh * (fairy.width / fairy.height);
+    const wx = 1004;
+    const wy = (630 - wh) / 2;
+    x.save();
+    x.globalAlpha = 0.05;
+    x.translate(wx + ww, wy);
+    x.scale(-1, 1);
+    x.drawImage(fairy, 0, 0, ww, wh);
+    x.restore();
+  }
+
+  // inset hairline frame
+  x.strokeStyle = 'rgba(31,37,64,0.26)';
+  x.lineWidth = 1.5;
+  x.strokeRect(34, 34, 1200 - 68, 630 - 68);
+
+  // fairy, natural navy line art, left column
+  if (fairyReady){
+    const fh = 452;
+    const fw = fh * (fairy.width / fairy.height);
+    const fx = 76;
+    const fy = (630 - fh) / 2;
+    x.drawImage(fairy, fx, fy, fw, fh);
+  }
+
+  // central text column
+  const RX = 678;
+
+  // wordmark with trailing period
+  x.fillStyle = NAVY;
+  x.textAlign = 'center';
+  x.textBaseline = 'alphabetic';
+  x.font = '500 112px "Cormorant Garamond"';
+  x.fillText('Icania.', RX, 222);
+
+  // underline rule beneath the wordmark
+  const wmW = x.measureText('Icania.').width;
+  x.strokeStyle = NAVY;
+  x.lineWidth = 2.5;
+  x.beginPath();
+  x.moveTo(RX - wmW/2, 250);
+  x.lineTo(RX + wmW/2, 250);
+  x.stroke();
+
+  // italic subline
+  x.fillStyle = NAVY;
+  x.font = 'italic 400 58px "Cormorant Garamond"';
+  x.fillText('Vinted Reselling Service', RX, 334);
+
+  // three stat pills, evenly spaced along the bottom
+  const pillsTop = 402;
+  const gap = 286;
+  pill(RX - gap, pillsTop, '3',     'month selling period');
+  pill(RX,       pillsTop, '50/50', 'split with sellers');
+  pill(RX + gap, pillsTop, '651',   'five star reviews on vinted');
+
+  // small hairline tick + small-caps domain footer
+  x.strokeStyle = 'rgba(31,37,64,0.3)';
+  x.lineWidth = 1.4;
+  x.beginPath();
+  x.moveTo(RX - 26, 556);
+  x.lineTo(RX + 26, 556);
+  x.stroke();
+
+  x.fillStyle = INK45;
+  x.textAlign = 'center';
+  x.textBaseline = 'alphabetic';
+  x.font = "400 18px 'Helvetica Neue', Helvetica, Arial, sans-serif";
+  x.letterSpacing = '6px';
+  x.fillText('ICANIA.CO.UK', RX + 3, 586);
+  x.letterSpacing = '0px';
+
+  window.__done = true;
+}
+
+window.redraw = render;
+window.exportCard = (type) => c.toDataURL(type || 'image/png');
+document.fonts.ready.then(render);
+render();
+</script>
+</body>
+</html>
