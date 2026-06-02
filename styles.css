@@ -710,14 +710,13 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   margin: 0;
   justify-self: center;
   text-align: center;
-  max-width: 20ch;
-  white-space: normal;
-  text-wrap: balance;
+  max-width: none;
+  white-space: nowrap;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(26px, 2.9vw, 44px);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
+  font-size: clamp(20px, 1.9vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 .home-hero-divider {
