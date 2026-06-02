@@ -1,13 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Shop preview · Icania</title>
-  <meta name="robots" content="noindex">
+  <title>Shop Pre Loved &amp; Vintage Womenswear | Icania South West London</title>
+  <meta name="description" content="Browse Icania's curated edit of pre loved and vintage womenswear. Designer and one of a kind pieces, ready to wear and bought securely on Vinted with full buyer protection. Consignment in South West London.">
+  <link rel="canonical" href="https://icania.co.uk/shopprep">
+
+  <!-- PREVIEW: noindex while this is sample stock at a temp URL. To go live as the real shop, delete the line below, move to /shop, and load Louise's own closet data. -->
+  <meta name="robots" content="noindex, follow">
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Icania">
+  <meta property="og:title" content="Shop Pre Loved &amp; Vintage Womenswear | Icania">
+  <meta property="og:description" content="A curated edit of pre loved and vintage womenswear. Ready to wear, bought securely on Vinted with full buyer protection.">
+  <meta property="og:url" content="https://icania.co.uk/shopprep">
+  <meta property="og:image" content="https://icania.co.uk/favicon-v2.png">
+  <meta property="og:image:alt" content="Icania">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shop Pre Loved &amp; Vintage Womenswear | Icania">
+  <meta name="twitter:description" content="A curated edit of pre loved and vintage womenswear, bought securely on Vinted.">
+  <meta name="twitter:image" content="https://icania.co.uk/favicon-v2.png">
+
   <meta name="theme-color" content="#1F2540">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32-v2.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://icania.co.uk/" },
+      { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://icania.co.uk/shopprep" }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant:wght@400;500;600&display=swap">
@@ -158,7 +188,7 @@
   <div class="sp-wrap">
     <div class="sp-head">
       <h1 class="sp-title">The Shop</h1>
-      <p class="sp-sub">Curated pre loved pieces, ready to wear. Browse here, buy securely on Vinted with full buyer protection.</p>
+      <p class="sp-sub">Curated pre loved pieces, ready to wear.<br>Buy securely below with full Vinted buyer protection.</p>
     </div>
     <div class="sp-filters" id="sp-filters"></div>
     <p class="sp-count" id="sp-count"></p>
@@ -225,6 +255,48 @@
   var activeCat = 'all';
   var CATS = ['all'];
   var byId = {};
+  var BASE = 'https://icania.co.uk';
+  var PAGE_TITLE = 'Shop Pre Loved & Vintage Womenswear | Icania South West London';
+
+  function injectLD() {
+    var items = PRODUCTS.map(function (p, i) {
+      return {
+        '@type': 'ListItem', 'position': i + 1,
+        'item': {
+          '@type': 'Product',
+          'name': p.brand + ' ' + p.title,
+          'image': p.photos,
+          'brand': { '@type': 'Brand', 'name': p.brand },
+          'category': p.category,
+          'size': p.size,
+          'itemCondition': 'https://schema.org/UsedCondition',
+          'url': BASE + '/shopprep?item=' + p.id,
+          'offers': {
+            '@type': 'Offer',
+            'price': p.price,
+            'priceCurrency': 'GBP',
+            'availability': p.reserved ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
+            'itemCondition': 'https://schema.org/UsedCondition',
+            'url': p.url,
+            'seller': { '@type': 'Organization', 'name': 'Icania' }
+          }
+        }
+      };
+    });
+    var ld = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      'name': 'Shop Pre Loved & Vintage Womenswear',
+      'description': 'A curated edit of pre loved and vintage womenswear from Icania, a South West London consignment service.',
+      'url': BASE + '/shopprep',
+      'isPartOf': { '@type': 'WebSite', 'name': 'Icania', 'url': BASE + '/' },
+      'mainEntity': { '@type': 'ItemList', 'numberOfItems': PRODUCTS.length, 'itemListElement': items }
+    };
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
@@ -282,6 +354,7 @@
     detail.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     window.scrollTo(0, 0);
+    document.title = p.brand + ' ' + p.title + ' | Icania Shop';
     if (push) history.pushState({ item: id }, '', '/shopprep?item=' + id);
   }
 
@@ -289,6 +362,7 @@
     detail.classList.remove('open');
     detail.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    document.title = PAGE_TITLE;
     if (!pop) history.pushState({}, '', '/shopprep');
   }
 
@@ -319,7 +393,7 @@
     var set = {};
     PRODUCTS.forEach(function (p) { set[p.category] = true; });
     CATS = ['all'].concat(Object.keys(set).sort());
-    renderFilters(); renderGrid();
+    renderFilters(); renderGrid(); injectLD();
     var m = location.search.match(/item=(\d+)/);
     if (m && byId[m[1]]) openDetail(m[1], false);
   }).catch(function () {
