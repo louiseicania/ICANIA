@@ -1144,6 +1144,10 @@ main:focus { outline: none; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: var(--hair-strong);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  box-sizing: border-box;
 }
 .step-cell {
   padding: 26px 36px 30px;
@@ -1152,7 +1156,8 @@ main:focus { outline: none; }
   flex-direction: column;
   gap: 10px;
 }
-.step-cell:last-child { border-right: 0; }
+.step-cell:first-child { padding-left: 0; }
+.step-cell:last-child { border-right: 0; padding-right: 0; }
 .step-title {
   font-family: var(--font-display);
   font-size: 26px;
