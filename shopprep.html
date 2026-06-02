@@ -43,12 +43,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/styles.css">
   <style>
-    .sp-flag {
-      background: var(--ink); color: var(--bg);
-      font-family: var(--font); font-size: 11px; letter-spacing: 1.5px;
-      text-transform: uppercase; text-align: center;
-      padding: 8px 16px; font-weight: 500;
-    }
     .sp-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
     .sp-head {
       display: flex; align-items: flex-start; justify-content: space-between;
@@ -159,6 +153,40 @@
     .sp-buy.reserved { background: var(--ink-25); pointer-events: none; }
     .sp-buy-note { font-family: var(--font); font-size: 12px; color: var(--ink-45); text-align: center; margin-top: 14px; line-height: 1.5; }
 
+    /* Arrival note */
+    .sp-modal {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(31, 37, 64, 0.45);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; transition: opacity .25s ease;
+    }
+    .sp-modal.open { opacity: 1; }
+    .sp-modal[hidden] { display: none; }
+    .sp-modal-card {
+      background: var(--bg); max-width: 460px; width: 100%;
+      padding: 40px 36px 32px; text-align: left;
+      box-shadow: 0 30px 90px rgba(31, 37, 64, 0.28);
+      transform: translateY(10px); transition: transform .25s ease;
+    }
+    .sp-modal.open .sp-modal-card { transform: translateY(0); }
+    .sp-modal-mark { display: block; height: 64px; width: auto; margin: 0 0 18px; }
+    .sp-modal-card h2 {
+      font-family: var(--font-display); font-weight: 300;
+      font-size: 30px; line-height: 1.1; margin: 0 0 16px; color: var(--ink);
+    }
+    .sp-modal-card p {
+      font-family: var(--font); font-size: 15px; line-height: 1.65;
+      color: var(--ink-65); margin: 0 0 14px;
+    }
+    .sp-modal-ok {
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-top: 10px; padding: 15px 28px;
+      background: var(--ink); color: var(--bg); border: 0; cursor: pointer;
+      font-family: var(--font); font-size: 13px; letter-spacing: 1.5px;
+      text-transform: uppercase; transition: opacity .2s ease;
+    }
+    .sp-modal-ok:hover { opacity: .85; }
+
     @media (max-width: 900px) {
       .sp-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
       .sp-detail-inner { grid-template-columns: 1fr; gap: 28px; padding-bottom: 64px; }
@@ -168,8 +196,6 @@
   </style>
 </head>
 <body>
-<div class="sp-flag">Shop preview · sample stock shown for layout only</div>
-
 <header class="nav">
   <div class="nav-inner">
     <a class="nav-mark" href="/"><img class="nav-anim" src="/fairy_stopmotion.gif" alt="" aria-hidden="true" width="200" height="200">Icania</a>
@@ -251,6 +277,16 @@
   <div class="sp-detail-inner" id="sp-detail-inner"></div>
 </div>
 
+<div class="sp-modal" id="sp-modal" role="dialog" aria-modal="true" aria-labelledby="sp-modal-title" hidden>
+  <div class="sp-modal-card">
+    <img class="sp-modal-mark" src="/fairy-mark.png" alt="">
+    <h2 id="sp-modal-title">Welcome to my shop.</h2>
+    <p>Everything here is a live mirror of my Vinted closet. Browse the pieces on the website, then tap through to buy.</p>
+    <p>To make a basket or a bundle, you will need to do that over on Vinted, where the checkout and full buyer protection live. There is a bundle discount running too, so you save when you buy more than one piece, applied automatically at the Vinted checkout.</p>
+    <button class="sp-modal-ok" id="sp-modal-ok" type="button">Start browsing</button>
+  </div>
+</div>
+
 <script>
 (function () {
   var grid = document.getElementById('sp-grid');
@@ -317,6 +353,11 @@
   }
 
   function renderGrid() {
+    if (!PRODUCTS.length) {
+      countEl.textContent = '';
+      grid.innerHTML = '<div class="sp-empty">The shop is quiet just now while Louise restocks. New pieces land here automatically as they go live on Vinted, so do check back soon.</div>';
+      return;
+    }
     var visible = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(function (p) { return p.category === activeCat; });
     countEl.textContent = visible.length + (visible.length === 1 ? ' piece' : ' pieces');
     if (!visible.length) { grid.innerHTML = '<div class="sp-empty">No pieces in this category right now.</div>'; return; }
@@ -392,6 +433,23 @@
   window.addEventListener('popstate', function () {
     var m = location.search.match(/item=(\d+)/);
     if (m && byId[m[1]]) openDetail(m[1], false); else closeDetail(true);
+  });
+
+  var modal = document.getElementById('sp-modal');
+  function closeModal() {
+    modal.classList.remove('open');
+    setTimeout(function () { modal.hidden = true; }, 250);
+    try { sessionStorage.setItem('sp-modal-seen', '1'); } catch (e) {}
+  }
+  (function openModal() {
+    try { if (sessionStorage.getItem('sp-modal-seen')) return; } catch (e) {}
+    modal.hidden = false;
+    requestAnimationFrame(function () { modal.classList.add('open'); });
+  })();
+  document.getElementById('sp-modal-ok').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
   fetch('/shop-data.json').then(function (r) { return r.json(); }).then(function (data) {

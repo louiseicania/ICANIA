@@ -972,6 +972,27 @@ main:focus { outline: none; }
   color: var(--ink-65);
   margin: 0;
 }
+.shop-prep-link {
+  display: block;
+  max-width: 420px;
+  margin: 4px auto 0;
+  padding: 16px 26px;
+  border: 1px solid var(--ink-25);
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-align: center;
+  text-decoration: none;
+  transition: border-color .2s ease, background-color .2s ease, color .2s ease;
+}
+.shop-prep-link:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
 .shop-cta-line { line-height: 1.9; margin: 0; }
 [data-view="shop"] .page-header { padding-bottom: 36px; }
 [data-view="shop"] .cta-band { padding: 32px 0 64px; }
@@ -1397,7 +1418,8 @@ main:focus { outline: none; }
    min-width block below so it can never leak into the mobile site. */
 .hiw-hero-mark { display: none; }
 .hiw-hero-sub { max-width: 640px; margin-top: 24px; }
-.vinted-word { color: #007782; }
+.vinted-word { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+@media (hover: hover) { .vinted-word:hover { color: #007782; } }
 .hiw-title-break { display: none; }
 @media (min-width: 961px) { .hiw-title-break { display: inline; } }
 @media (min-width: 961px) {

@@ -715,6 +715,7 @@ function __observeReveals(scope) {
     if (!a) return;
     const href = a.getAttribute('href');
     if (!href || href[0] !== '/' || href.startsWith('//')) return;
+    if (a.hasAttribute('data-native')) return; // standalone page, let the browser load it
     if (a.target && a.target !== '_self') return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
