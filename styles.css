@@ -1397,6 +1397,9 @@ main:focus { outline: none; }
    min-width block below so it can never leak into the mobile site. */
 .hiw-hero-mark { display: none; }
 .hiw-hero-sub { max-width: 640px; margin-top: 24px; }
+.vinted-word { color: #007782; }
+.hiw-title-break { display: none; }
+@media (min-width: 961px) { .hiw-title-break { display: inline; } }
 @media (min-width: 961px) {
   .page-header.hiw-hero {
     display: flex;
