@@ -2,10 +2,11 @@
 // Strategy:
 //   - Pre-cache the shell on install
 //   - Network-first for HTML/navigation (so deploys are picked up; offline falls back to cached /)
+//   - Network-first for same-origin CSS/JS (deploys show immediately; offline falls back to cache)
 //   - Cache-first for static assets (icons, fairy GIF, fonts)
 // Cache name is versioned. Bump CACHE_VERSION when you change pre-cached assets.
 
-const CACHE_VERSION = 'v22';
+const CACHE_VERSION = 'v23';
 const CACHE = 'icania-' + CACHE_VERSION;
 
 const PRECACHE = [
@@ -61,7 +62,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Same-origin static assets: cache-first, update in background.
+  // CSS/JS: network-first so deploys are picked up immediately; fall back to cache offline.
+  if (sameOrigin && (url.pathname.endsWith('.css') || url.pathname.endsWith('.js'))) {
+    event.respondWith(
+      fetch(req)
+        .then((resp) => {
+          if (resp && resp.ok) {
+            const clone = resp.clone();
+            caches.open(CACHE).then((c) => c.put(req, clone)).catch(() => {});
+          }
+          return resp;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Same-origin static assets (icons, fairy GIF): cache-first, update in background.
   if (sameOrigin) {
     event.respondWith(
       caches.match(req).then((cached) => {

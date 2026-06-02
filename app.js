@@ -103,7 +103,17 @@ window.__loader = (function () {
 })();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').catch(function () {});
+    navigator.serviceWorker.register('/sw.js').then(function (reg) {
+      reg.update();
+    }).catch(function () {});
+  });
+  // When a new service worker takes control (after a deploy), reload once so the
+  // fresh CSS/JS is shown without the user having to manually refresh.
+  var swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (swRefreshing) return;
+    swRefreshing = true;
+    window.location.reload();
   });
 }
 
