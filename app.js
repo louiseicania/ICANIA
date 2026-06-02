@@ -746,7 +746,7 @@ function __observeReveals(scope) {
 (function () {
   var nav = document.querySelector('.nav');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var marks = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.section-mark img'));
+  var marks = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.section-mark img, .home-cover-mark img'));
   var ticking = false;
   function frame() {
     ticking = false;
@@ -755,16 +755,19 @@ function __observeReveals(scope) {
     if (marks.length) {
       var vh = window.innerHeight;
       var desktop = window.innerWidth >= 720;
-      var tilt = desktop ? -34 : -18;   // stronger float on desktop
-      var driftK = desktop ? -0.20 : -0.16;
       for (var i = 0; i < marks.length; i++) {
+        // The central hero fairy floats harder than the section dividers.
+        var hero = !!marks[i].closest('.home-cover-mark');
+        var tilt = desktop ? (hero ? -54 : -34) : (hero ? -30 : -18);
+        var driftK = desktop ? (hero ? -0.28 : -0.20) : (hero ? -0.22 : -0.16);
+        var persp = hero ? 520 : 680;
         var r = marks[i].getBoundingClientRect();
         var offset = (r.top + r.height / 2) - vh / 2;
         var drift = offset * driftK;
         var norm = Math.max(-1, Math.min(1, offset / (vh / 2)));
         var rotX = norm * tilt;
         marks[i].style.transform =
-          'perspective(680px) translateY(' + drift.toFixed(1) + 'px) rotateX(' + rotX.toFixed(1) + 'deg)';
+          'perspective(' + persp + 'px) translateY(' + drift.toFixed(1) + 'px) rotateX(' + rotX.toFixed(1) + 'deg)';
       }
     }
   }

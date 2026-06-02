@@ -675,15 +675,21 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
 .home-hero {
   min-height: calc(100vh - 145px);
   display: grid;
-  grid-template-rows: 1fr auto;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas:
+    "steps cover side"
+    "head  head  head";
+  align-items: center;
+  align-content: center;
+  column-gap: clamp(32px, 5vw, 96px);
+  row-gap: clamp(36px, 6vh, 84px);
   max-width: var(--max);
   margin: 0 auto;
   padding: 32px var(--gutter) 4px;
   box-sizing: border-box;
 }
 .section-mark {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 4px var(--gutter);
@@ -700,26 +706,71 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
 }
 .section-mark img { width: 220px; height: auto; margin: 0 36px; display: block; opacity: 0.85; will-change: transform; }
 .home-hero-headline {
+  grid-area: head;
   margin: 0;
-  align-self: center;
   justify-self: center;
   text-align: center;
-  max-width: 18ch;
-  text-wrap: balance;
+  max-width: none;
+  white-space: nowrap;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(56px, 8.4vw, 140px);
-  line-height: 0.98;
-  letter-spacing: -0.018em;
+  font-size: clamp(30px, 4.4vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
-.home-hero-foot {
+.home-cover {
+  grid-area: cover;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 48px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
-.home-hero-steps { max-width: 460px; }
+.home-cover-mark { display: flex; justify-content: center; perspective: 560px; }
+.home-cover-mark img.hero-fairy {
+  width: clamp(150px, 17vw, 230px);
+  height: auto;
+  display: block;
+  opacity: 0.9;
+  will-change: transform;
+  transform-origin: center 62%;
+}
+.home-cover-word {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(56px, 7vw, 116px);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.home-cover-rule {
+  display: block;
+  width: clamp(80px, 9vw, 130px);
+  height: 1px;
+  background: var(--ink-25);
+  margin: 2px 0;
+}
+.home-cover-sub {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(16px, 1.6vw, 23px);
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+.home-cover-tag {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.05;
+  color: var(--ink);
+}
+.home-hero-foot { display: contents; }
+.home-hero-steps { grid-area: steps; max-width: 460px; align-self: center; }
 .hero-steps {
   list-style: none;
   margin: 0 0 22px;
@@ -743,6 +794,8 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   color: var(--accent);
 }
 .home-hero-side {
+  grid-area: side;
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -753,10 +806,10 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   margin: 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(20px, 1.9vw, 30px);
-  line-height: 1.1;
+  font-size: clamp(17px, 1.5vw, 25px);
+  line-height: 1.15;
   color: var(--accent);
-  white-space: nowrap;
+  text-wrap: balance;
 }
 .home-hero-tagline-m { display: none; }
 .hero-cta {
@@ -1782,8 +1835,9 @@ main:focus { outline: none; }
   .footer-group-b .footer-col-browse { padding-top: 48px; } /* clears the brand logo so Browse lines up with the tagline, not the Icania mark */
   .footer-col-legal { align-self: stretch; }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
-  .home-hero-headline { max-width: none; text-align: left; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); }
-  .home-hero-foot { flex-direction: column; align-items: stretch; gap: 44px; }
+  .home-cover { display: none; }
+  .home-hero-headline { max-width: none; text-align: left; white-space: normal; text-wrap: balance; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); line-height: 0.98; }
+  .home-hero-foot { display: flex; flex-direction: column; align-items: stretch; gap: 44px; }
   .home-hero-side { order: -1; align-items: flex-start; text-align: left; }
   .home-hero-tagline { white-space: normal; }
   .home-hero-steps { max-width: none; }
