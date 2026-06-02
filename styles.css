@@ -779,7 +779,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   color: var(--ink);
 }
 .home-hero-foot { display: contents; }
-.home-hero-steps { grid-area: steps; max-width: 460px; align-self: center; }
+.home-hero-steps { grid-area: steps; max-width: 460px; align-self: end; }
 .hero-steps {
   list-style: none;
   margin: 0 0 22px;
@@ -804,7 +804,7 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
 }
 .home-hero-side {
   grid-area: side;
-  align-self: center;
+  align-self: end;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
