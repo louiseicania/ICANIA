@@ -679,13 +679,13 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   grid-template-areas:
     "steps cover side"
     "head  head  head";
+  grid-template-rows: 1fr auto;
   align-items: center;
-  align-content: center;
   column-gap: clamp(32px, 5vw, 96px);
-  row-gap: clamp(36px, 6vh, 84px);
+  row-gap: clamp(14px, 2vh, 26px);
   max-width: var(--max);
   margin: 0 auto;
-  padding: 32px var(--gutter) 4px;
+  padding: 32px var(--gutter) 28px;
   box-sizing: border-box;
 }
 .section-mark {
@@ -710,14 +710,23 @@ form[data-sell-form] button[type="submit"] { min-width: 220px; }
   margin: 0;
   justify-self: center;
   text-align: center;
-  max-width: none;
-  white-space: nowrap;
+  max-width: 20ch;
+  white-space: normal;
+  text-wrap: balance;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(30px, 4.4vw, 60px);
-  line-height: 1;
+  font-size: clamp(26px, 2.9vw, 44px);
+  line-height: 1.06;
   letter-spacing: -0.015em;
   color: var(--ink);
+}
+.home-hero-divider {
+  display: block;
+  height: 1px;
+  background: var(--ink-12);
+  width: calc(100% - var(--gutter) * 2);
+  max-width: calc(var(--max) - var(--gutter) * 2);
+  margin: 0 auto;
 }
 .home-cover {
   grid-area: cover;
@@ -1836,6 +1845,7 @@ main:focus { outline: none; }
   .footer-col-legal { align-self: stretch; }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
   .home-cover { display: none; }
+  .home-hero-divider { display: none; }
   .home-hero-headline { max-width: none; text-align: left; white-space: normal; text-wrap: balance; margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); line-height: 0.98; }
   .home-hero-foot { display: flex; flex-direction: column; align-items: stretch; gap: 44px; }
   .home-hero-side { order: -1; align-items: flex-start; text-align: left; }
