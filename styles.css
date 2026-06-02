@@ -1847,9 +1847,9 @@ main:focus { outline: none; }
   .home-hero { min-height: 0; display: block; padding: 56px var(--gutter) 64px; }
   .home-cover { display: none; }
   .home-hero-divider { display: none; }
-  .home-hero-headline { max-width: none; text-align: left; white-space: normal; text-wrap: balance; padding: 0 var(--gutter); margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); line-height: 0.98; }
+  .home-hero-headline { max-width: none; text-align: center; white-space: normal; text-wrap: balance; padding: 0 var(--gutter); margin-bottom: 48px; font-size: clamp(48px, 11vw, 96px); line-height: 0.98; }
   .home-hero-foot { display: flex; flex-direction: column; align-items: stretch; gap: 44px; }
-  .home-hero-side { order: -1; align-self: stretch; width: 100%; align-items: flex-start; text-align: left; }
+  .home-hero-side { order: -1; align-self: stretch; width: 100%; align-items: center; text-align: center; }
   .home-hero-tagline { white-space: normal; }
   .home-hero-steps { max-width: none; }
   .hero-cta { width: 100%; }
