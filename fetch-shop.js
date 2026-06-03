@@ -1,7 +1,7 @@
 // Mirrors Louise's public Vinted closet into shop-data.json.
 // Flow: load vinted.co.uk to mint an anonymous access_token_web, send it as a
 // Bearer token to the public wardrobe endpoint, map each item to the shape
-// shopprep.html expects, and write the file.
+// webshop.html expects, and write the file.
 //
 // Safety: the file is ONLY rewritten on a confirmed good response (HTTP 200).
 // A block (DataDome 403), auth failure, or network error leaves the existing
