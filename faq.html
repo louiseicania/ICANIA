@@ -79,8 +79,8 @@
       }
     }(window.location));
   </script>
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=20260602c">
+  <script src="/app.js?v=20260602c" defer></script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -113,8 +113,13 @@
 <main id="main" tabindex="-1">
 <section data-view="home" style="display:none;">
 <section class="home-hero">
-      <h1 class="home-hero-headline fade-up fade-up-1">Sell your wardrobe without the hassle.</h1>
       <p class="home-hero-tagline-m fade-up fade-up-1">South West London Clothing Consignment.</p>
+      <div class="home-cover fade-up fade-up-1" aria-hidden="true">
+        <div class="home-cover-mark"><img class="hero-fairy" src="fairy-mark.png" alt=""></div>
+        <p class="home-cover-word">Icania</p>
+        <span class="home-cover-rule"></span>
+        <p class="home-cover-sub">Vinted Reselling Service</p>
+      </div>
       <div class="home-hero-foot">
         <div class="home-hero-steps fade-up fade-up-2">
           <ol class="hero-steps">
@@ -133,6 +138,10 @@
         </div>
       </div>
     </section>
+
+    <div class="home-hero-divider" aria-hidden="true"></div>
+
+    <h2 class="home-hero-headline fade-up">Sell your wardrobe without the hassle.</h2>
 
     <div class="section-mark" aria-hidden="true">
       <img src="fairy-mark.png" alt="">
@@ -213,7 +222,10 @@
           <span class="shop-coming-eyebrow">Browse here</span>
           <a class="btn-vinted" href="https://www.vinted.co.uk/member/115231306-icaniaa" target="_blank" rel="noopener">Shop on Vinted</a>
           <p class="shop-coming-note">Opens on Vinted &middot; 650+ five star reviews</p>
-          <a class="shop-prep-link" href="/shopprep" data-native>Coming Soon: Webstore to view my Vinted profile from here.</a>
+          <a class="shop-prep" href="/shopprep" data-native>
+            <span class="shop-prep-tag">Coming soon</span>
+            <span class="shop-prep-text">A webstore to view my Vinted profile, right here.</span>
+          </a>
         </div>
       </div>
     </section>
